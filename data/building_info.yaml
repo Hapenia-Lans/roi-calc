@@ -1,0 +1,115 @@
+# Copyright 2023 Hapenia Lans
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Collectors,
+Lumberyard: !Collector # 伐木场
+  recipes:
+    - Wood
+  price: 125000
+  upkeep: 3125
+  collector_price: 75000
+  collector_upkeep: 1875
+IronMine: !Collector # 铁矿
+  recipes:
+    - IronOre
+  price: 225000
+  upkeep: 5625
+  collector_price: 175000
+  collector_upkeep: 4375
+CoalMine: !Collector # 煤矿
+  recipes:
+    - Coal
+  price: 225000
+  upkeep: 5625
+  collector_price: 125000
+  collector_upkeep: 4375
+CopperMine: !Collector # 铜矿
+  recipes:
+    - Copper
+  price: 225000
+  upkeep: 5625
+  collector_price: 175000
+  collector_upkeep: 4375
+WaterSiphon: !Collector # 水厂
+  recipes:
+    - Water-Siphon
+  price: 125000
+  upkeep: 3125
+  collector_price: 75000
+  collector_upkeep: 1875
+FishermansPier: !Collector # 渔民码头
+  recipes:
+    - Fish
+  price: 150000
+  upkeep: 3750
+  collector_price: 100000
+  collector_upkeep: 2500
+GasPump: !Collector # 天然气厂
+  recipes:
+    - Gas
+  price: 275000
+  upkeep: 6875
+  collector_price: 225000
+  collector_upkeep: 5625
+OilDrill: !Collector # 石油钻井
+  recipes:
+    - Oil
+  price: 275000
+  upkeep: 6875
+  collector_price: 225000
+  collector_upkeep: 5625
+SandCollector: !Collector # 采沙场
+  recipes:
+    - Sand
+  price: 125000
+  upkeep: 3125
+  collector_price: 75000
+  collector_upkeep: 1875
+WaterWell: !Collector # 水井
+  recipes:
+    - Water-Well
+  price: 150000
+  upkeep: 3750
+  collector_price: 100000
+  collector_upkeep: 2500
+OffShoreOilDrill: !Collector # 海上石油钻井平台
+  recipes:
+    - Oil
+  price: 275000
+  upkeep: 6875
+  collector_price: 225000
+  collector_upkeep: 5625
+# # Farms
+# CropFarm:      # 农场
+# LiveStockFarm: # 牧场
+# Orchard:       # 果园
+# Plantation:    # 种植园
+# # Light Industry
+# DrinksFactory:        # 饮料厂
+# PreservationFactory:  # 预制食品厂
+# FoodFactory:          # 食品厂
+# BreweryAndDistillery: # 酒厂
+# PaperMill:            # 造纸厂
+# ToyFactory:           # 玩具厂
+# TextileFactory:       # 纺织厂
+# CarpentryCenter:      # 木工房
+# # Heavy Industry:
+# AutomotiveFactory:    # 汽车厂
+# HomeGoodsFactory:     # 家具厂
+# GlassworksAndSmelter: # 玻璃厂
+# PetrochemicalPlant:   # 化工厂
+# # Prototype Factories
+# ComputerMegaFactory:   # 计算机大型工厂
+# MealMegaFactory:       # 食品大型工厂
+# AutomobileMegaFactory: # 汽车大型工厂

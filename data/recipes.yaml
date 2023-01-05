@@ -1,0 +1,57 @@
+# Copyright 2023 Hapenia Lans
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+# RAW RESOURCES
+Water-Siphon:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Water, 1], ~, ~]
+  day_to_gen: 15
+Water-Well:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Water, 1], ~, ~]
+  day_to_gen: 15
+Sand:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Sand, 1], ~, ~]
+  day_to_gen: 15
+Wood:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Wood, 1], ~, ~]
+  day_to_gen: 15
+Fish:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Fish, 1], ~, ~]
+  day_to_gen: 15
+Gas:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Gas, 1], ~, ~]
+  day_to_gen: 15
+IronOre:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [IronOre, 1], ~, ~]
+  day_to_gen: 15
+Coal:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Coal, 1], ~, ~]
+  day_to_gen: 15
+Copper:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Copper, 1], ~, ~]
+  day_to_gen: 15
+Oil:
+  inputs: [~, ~, ~]
+  outputs: [!Slot [Oil, 1], ~, ~]
+  day_to_gen: 15
+#TODO: Finish this
