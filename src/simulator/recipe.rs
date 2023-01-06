@@ -17,9 +17,12 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use serde_derive::Deserialize;
 
-use super::Productivity;
+use super::productivity::{Productivity, Speed};
 
-pub static RECIPES: Lazy<HashMap<String, Recipe>> = Lazy::new(|| {
+#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+pub struct Id(String);
+
+pub static RECIPES: Lazy<HashMap<Id, Recipe>> = Lazy::new(|| {
     const RECIPE_RAW: &'static str = include_str!("../../data/recipes.yaml");
     serde_yaml::from_str(RECIPE_RAW).unwrap()
 });
@@ -181,14 +184,14 @@ impl Recipe {
             self.inputs
                 .iter()
                 .filter_map(|&slot| slot)
-                .map(|Slot(item, amount)| (item, amount as f64))
+                .map(|Slot(item, amount)| (item, Speed::from(amount as f64)))
                 .collect(),
         );
         let outputs_productivity = Productivity::new(
             self.outputs
                 .iter()
                 .filter_map(|&slot| slot)
-                .map(|Slot(item, amount)| (item, amount as f64))
+                .map(|Slot(item, amount)| (item, Speed::from(amount as f64)))
                 .collect(),
         );
         (outputs_productivity - inputs_productivity) * (1.0 / self.day_to_gen as f64)

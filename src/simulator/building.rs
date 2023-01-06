@@ -17,7 +17,7 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use serde_derive::Deserialize;
 
-use super::{money, recipe::Recipe, Productivity};
+use super::{money, recipe::Recipe, productivity::Productivity};
 
 pub enum Error {
     InfoNotFoundError,
@@ -38,26 +38,26 @@ pub enum Info {
 #[derive(Debug, Deserialize)]
 pub struct CollectorInfo {
     pub recipes: Vec<String>,
-    pub price: u64,
-    pub upkeep: u64,
-    pub collector_price: u64,
-    pub collector_upkeep: u64,
+    pub price: money::Money,
+    pub upkeep: money::Money,
+    pub collector_price: money::Money,
+    pub collector_upkeep: money::Money,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct FarmInfo {
     pub recipes: Vec<String>,
-    pub price: u64,
-    pub upkeep: u64,
-    pub field_price: u64,
-    pub field_upkeep: u64,
+    pub price: money::Money,
+    pub upkeep: money::Money,
+    pub field_price: money::Money,
+    pub field_upkeep: money::Money,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct FactoryInfo {
     pub recipes: Vec<String>,
-    pub price: u64,
-    pub upkeep: u64,
+    pub price: money::Money,
+    pub upkeep: money::Money,
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize)]
@@ -180,15 +180,107 @@ impl Building for CollectorPlant {
     }
 
     fn price(&self) -> money::Money {
-        money::Money(self.info.price)
+        self.info.price + self.info.collector_price * self.collector_amount as u64
     }
 
     fn upkeep(&self) -> money::Money {
-        money::Money(self.info.upkeep + self.info.collector_upkeep * self.collector_amount as u64)
-            * self.worker_wage.value()
+        self.info.upkeep
+            + self.info.collector_upkeep * self.collector_amount as u64 * self.worker_wage.value()
     }
 
     fn plant_type(&self) -> Type {
         self.plant_type
+    }
+}
+
+pub struct Farm {
+    plant_type: Type,
+    field_amount: OutbuildingAmount,
+    recipe: &'static Recipe, // 配方
+    worker_wage: WorkerWage, // 工人工资
+    info: &'static FarmInfo,
+}
+
+impl Farm {
+    pub fn create(
+        plant_type: Type,
+        field_amount: OutbuildingAmount,
+        recipe: &'static Recipe,
+        worker_wage: WorkerWage,
+    ) -> Result<Self, Error> {
+        let Some(Info::Farm(info)) = INFOS.get(&plant_type) else {
+                return Err(Error::InfoNotFoundError);
+            };
+        Ok(Farm {
+            plant_type,
+            field_amount,
+            recipe,
+            worker_wage,
+            info,
+        })
+    }
+}
+
+impl Building for Farm {
+    fn plant_type(&self) -> Type {
+        self.plant_type
+    }
+
+    fn productivity(&self) -> Productivity {
+        self.recipe.productivity() * (self.field_amount as u8 as f64 * self.worker_wage.value())
+    }
+
+    fn price(&self) -> money::Money {
+        self.info.price + (self.field_amount as u64 * self.info.field_price)
+    }
+
+    fn upkeep(&self) -> money::Money {
+        self.info.upkeep
+            + (self.field_amount as u64 * self.info.field_upkeep) * self.worker_wage.value()
+    }
+}
+
+// TODO: 实现 Factory
+
+pub struct Factory {
+    plant_type: Type,
+    recipe: &'static Recipe, // 配方
+    worker_wage: WorkerWage, // 工人工资
+    info: &'static FactoryInfo,
+}
+
+impl Factory {
+    pub fn create(
+        plant_type: Type,
+        recipe: &'static Recipe,
+        worker_wage: WorkerWage,
+    ) -> Result<Self, Error> {
+        let Some(Info::Factory(info)) = INFOS.get(&plant_type) else {
+                return Err(Error::InfoNotFoundError);
+            };
+        Ok(Factory {
+            plant_type,
+            recipe,
+            worker_wage,
+            info,
+        })
+    }
+}
+
+impl Building for Factory {
+    fn plant_type(&self) -> Type {
+        self.plant_type
+    }
+
+    fn productivity(&self) -> Productivity {
+        self.recipe.productivity() * self.worker_wage.value()
+    }
+
+    fn price(&self) -> money::Money {
+        self.info.price
+    }
+
+    fn upkeep(&self) -> money::Money {
+        self.info.upkeep
     }
 }

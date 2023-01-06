@@ -14,43 +14,43 @@
 
 
 # RAW RESOURCES
-Water-Siphon:
+!Id Water-Siphon:
   inputs: [~, ~, ~]
   outputs: [!Slot [Water, 1], ~, ~]
   day_to_gen: 15
-Water-Well:
+!Id Water-Well:
   inputs: [~, ~, ~]
   outputs: [!Slot [Water, 1], ~, ~]
   day_to_gen: 15
-Sand:
+!Id Sand:
   inputs: [~, ~, ~]
   outputs: [!Slot [Sand, 1], ~, ~]
   day_to_gen: 15
-Wood:
+!Id Wood:
   inputs: [~, ~, ~]
   outputs: [!Slot [Wood, 1], ~, ~]
   day_to_gen: 15
-Fish:
+!Id Fish:
   inputs: [~, ~, ~]
   outputs: [!Slot [Fish, 1], ~, ~]
   day_to_gen: 15
-Gas:
+!Id Gas:
   inputs: [~, ~, ~]
   outputs: [!Slot [Gas, 1], ~, ~]
   day_to_gen: 15
-IronOre:
+!Id IronOre:
   inputs: [~, ~, ~]
   outputs: [!Slot [IronOre, 1], ~, ~]
   day_to_gen: 15
-Coal:
+!Id Coal:
   inputs: [~, ~, ~]
   outputs: [!Slot [Coal, 1], ~, ~]
   day_to_gen: 15
-Copper:
+!Id Copper:
   inputs: [~, ~, ~]
   outputs: [!Slot [Copper, 1], ~, ~]
   day_to_gen: 15
-Oil:
+!Id Oil:
   inputs: [~, ~, ~]
   outputs: [!Slot [Oil, 1], ~, ~]
   day_to_gen: 15

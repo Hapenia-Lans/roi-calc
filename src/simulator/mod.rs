@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::{
-    collections::HashMap,
-    ops::{Add, Mul, Sub},
-};
-
 pub mod money;
 
 pub mod building;
 
 pub mod recipe;
 
-use recipe::{Item, Recipe};
+pub mod productivity;
+
+use std::collections::HashMap;
+
+use recipe::Recipe;
 
 pub enum Error {
     SimulatorCreationFailed(String),
@@ -63,7 +62,27 @@ pub enum Condition {
 }
 
 // 模拟报告。
-pub struct Report {}
+pub struct Report {
+    productivity: productivity::Productivity,
+    total_buildings: HashMap<building::Type, u32>,
+    total_price: money::Money,
+    total_upkeep: money::Money,
+}
+
+impl Report {
+    pub fn productivity(&self) -> &productivity::Productivity {
+        &self.productivity
+    }
+    pub fn total_buildings(&self) -> &HashMap<building::Type, u32> {
+        &self.total_buildings
+    }
+    pub fn total_price(&self) -> money::Money {
+        self.total_price
+    }
+    pub fn total_upkeep(&self) -> money::Money {
+        self.total_upkeep
+    }
+}
 
 pub struct Simulator {
     buildings: Vec<Box<dyn building::Building>>,
@@ -71,96 +90,68 @@ pub struct Simulator {
 
 impl Simulator {
     pub fn from_conditions(conditions: &[Condition]) -> Result<Self> {
+        let mut buildings: Vec<Box<dyn building::Building>> = vec![];
         for cond in conditions {
-            match cond {
+            let building: Box<dyn building::Building> = match cond {
                 Condition::Collector {
                     building_type,
                     recipe,
                     worker_wage,
                     collector_amount,
-                } => {
-                    building::CollectorPlant::create(
-                        *building_type,
-                        *collector_amount,
-                        recipe,
-                        *worker_wage,
-                    )?;
-                }
+                } => Box::new(building::CollectorPlant::create(
+                    *building_type,
+                    *collector_amount,
+                    recipe,
+                    *worker_wage,
+                )?),
                 Condition::Farm {
                     building_type,
                     recipe,
                     worker_wage,
                     field_amount,
-                } => todo!(),
+                } => Box::new(building::Farm::create(
+                    *building_type,
+                    *field_amount,
+                    recipe,
+                    *worker_wage,
+                )?),
                 Condition::Factory {
                     building_type,
                     recipe,
                     worker_wage,
-                } => todo!(),
-            }
+                } => Box::new(building::Factory::create(
+                    *building_type,
+                    recipe,
+                    *worker_wage,
+                )?),
+            };
+            buildings.push(building);
         }
-        todo!()
+        Ok(Simulator { buildings })
     }
-}
 
-pub struct Productivity {
-    inner: HashMap<Item, f64>,
-}
-
-impl Productivity {
-    pub fn new(inner: HashMap<Item, f64>) -> Self {
-        Productivity { inner }
-    }
-}
-
-// 为 Productivity 实现这些运算虽然会造成额外开销（例如多次加减本可以在一次循环内解决），但由于数据量较小，为了方便，这样做值得
-
-impl Add for Productivity {
-    type Output = Productivity;
-
-    /// 将两个产能相加。对于两个 `Productivity` 共有的物品，速率相加；不共有的物品，插入新键值对。注意：如果同一物品产能相加结果为零，仍然不会删除这个物品！
-    fn add(self, rhs: Self) -> Self::Output {
-        let mut result = self;
-        rhs.inner
-            .into_iter()
-            .for_each(|(item, productivity)| match result.inner.get_mut(&item) {
-                Some(value) => {
-                    *value += productivity;
-                }
-                None => {
-                    result.inner.insert(item, productivity);
-                }
-            });
-        result
-    }
-}
-
-impl Sub for Productivity {
-    type Output = Productivity;
-    /// 在结果上等于 `a + (b * -1)`，但比它更快。
-    fn sub(self, rhs: Self) -> Self::Output {
-        let mut result = self;
-        rhs.inner
-            .into_iter()
-            .for_each(|(item, productivity)| match result.inner.get_mut(&item) {
-                Some(value) => {
-                    *value -= productivity;
-                }
-                None => {
-                    result.inner.insert(item, -productivity);
-                }
-            });
-        result
-    }
-}
-
-impl Mul<f64> for Productivity {
-    type Output = Productivity;
-
-    /// 简单数乘。将所有生产速率乘以给定浮点数 `rhs`。
-    fn mul(self, rhs: f64) -> Self::Output {
-        let mut result = self;
-        result.inner.values_mut().for_each(|x| *x *= rhs);
-        result
+    pub fn simulate(&self) -> Report {
+        let mut productivity: productivity::Productivity =
+            productivity::Productivity::new(HashMap::new());
+        let mut total_buildings: HashMap<building::Type, u32> = HashMap::new();
+        let mut total_price = money::Money::from(0);
+        let mut total_upkeep = money::Money::from(0);
+        for i in self.buildings.iter() {
+            let plant_type = i.plant_type();
+            let prod = i.productivity();
+            total_price += i.price();
+            total_upkeep += i.upkeep();
+            productivity += prod;
+            total_buildings
+                .entry(plant_type)
+                .and_modify(|amount| *amount += 1)
+                .or_insert(1);
+        }
+        Report {
+            productivity,
+            total_buildings,
+            total_price,
+            total_upkeep,
+        }
     }
 }

@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::{
-    fmt::Display,
-    ops::{Add, Mul, Sub},
-};
+use std::ops::{Add, AddAssign, Mul, Sub};
+
+use serde_derive::Deserialize;
 
 pub enum Unit {
     One,
@@ -23,22 +22,16 @@ pub enum Unit {
     Million,
 }
 
-#[derive(PartialEq, Eq, PartialOrd, Ord)]
-pub struct Money(pub u64);
+#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Deserialize, Debug)]
+pub struct Money(u64);
 
-impl Display for Money {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl ToString for Money {
+    fn to_string(&self) -> String {
         let unit = match self.0 {
             0..=1_000 => Unit::One,
             1_001..=1_000_000 => Unit::Kilo,
             _ => Unit::Million,
         };
-        write!(f, "{}", self.show(unit))
-    }
-}
-
-impl Money {
-    pub fn show(&self, unit: Unit) -> String {
         match unit {
             Unit::One => format!("${}", self.0),
             Unit::Kilo => format!("${}K", self.0 / 1_000),
@@ -47,11 +40,29 @@ impl Money {
     }
 }
 
+impl From<u64> for Money {
+    fn from(value: u64) -> Self {
+        Money(value)
+    }
+}
+
+impl Money {
+    pub fn value(&self) -> u64 {
+        self.0
+    }
+}
+
 impl Add<Money> for Money {
     type Output = Money;
 
     fn add(self, rhs: Money) -> Self::Output {
         Money(self.0 + rhs.0)
+    }
+}
+
+impl AddAssign<Money> for Money {
+    fn add_assign(&mut self, rhs: Money) {
+        self.0 += rhs.0;
     }
 }
 
