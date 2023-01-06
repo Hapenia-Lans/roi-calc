@@ -17,7 +17,7 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use serde_derive::Deserialize;
 
-use super::{money, recipe::Recipe, productivity::Productivity};
+use super::{money, productivity::Productivity, recipe::Recipe};
 
 pub enum Error {
     InfoNotFoundError,
@@ -239,8 +239,6 @@ impl Building for Farm {
             + (self.field_amount as u64 * self.info.field_upkeep) * self.worker_wage.value()
     }
 }
-
-// TODO: 实现 Factory
 
 pub struct Factory {
     plant_type: Type,
