@@ -1,0 +1,45 @@
+# Copyright 2023 Hapenia Lans
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# 原始资源
+Water: 3560
+Gas: 7520
+Wood: 1850
+Sand: 1850
+Coal: 5940
+Oil: 7520
+IronOre: 5940
+Copper: 5940
+Fish: 2380
+# 农产品
+Cocoa: 9040
+Hops: 7390
+Potato: 7390
+Wheat: 7390
+Oranges: 7880
+Cotton: 9040
+Berries: 9040
+RawRubber: 7880
+Sugar: 9040
+Apples: 7880
+Grapes: 7880
+Vegetables: 7390
+# 牲畜
+ChickenMeat: 5220
+Eggs: 2610
+Beef: 6260
+Leather: 6260
+Milk: 6260
+Mutton: 5740
+Wool: 2870

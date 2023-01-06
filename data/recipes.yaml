@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#TODO: Finish this
 
 # RAW RESOURCES
+
 !Id Water-Siphon:
   inputs: [~, ~, ~]
   outputs: [!Slot [Water, 1], ~, ~]
@@ -54,4 +56,71 @@
   inputs: [~, ~, ~]
   outputs: [!Slot [Oil, 1], ~, ~]
   day_to_gen: 15
-#TODO: Finish this
+
+# FARM
+
+!Id Cocoa:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Cocoa, 2], ~, ~]
+  day_to_gen: 30
+!Id Hops:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Hops, 2], ~, ~]
+  day_to_gen: 35
+!Id Potato:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Potato, 2], ~, ~]
+  day_to_gen: 35
+!Id Wheat:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Wheat, 2], ~, ~]
+  day_to_gen: 35
+!Id Oranges:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Oranges, 2], ~, ~]
+  day_to_gen: 30
+!Id Cotton:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Cotton, 2], ~, ~]
+  day_to_gen: 30
+!Id Olives:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Olives, 2], ~, ~]
+  day_to_gen: 30
+!Id Berries:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Berries, 2], ~, ~]
+  day_to_gen: 30
+!Id RawRubber:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [RawRubber, 2], ~, ~]
+  day_to_gen: 30
+!Id Sugar:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Sugar, 2], ~, ~]
+  day_to_gen: 30
+!Id Apples:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Apples, 2], ~, ~]
+  day_to_gen: 30
+!Id Grapes:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Grapes, 2], ~, ~]
+  day_to_gen: 30
+!Id Vegetables:
+  inputs: [!Slot [Water, 1], ~, ~]
+  outputs: [!Slot [Vegetables, 2], ~, ~]
+  day_to_gen: 35
+# LIVESTOCKS
+!Id Cow:
+  inputs: [!Slot [Water, 1], !Slot [Wheat, 1], ~]
+  outputs: [!Slot [Beef, 1], !Slot [Milk, 1], !Slot [Leather, 1]]
+  day_to_gen: 35
+!Id Sheep:
+  inputs: [!Slot [Water, 1], !Slot [Wheat, 1], ~]
+  outputs: [!Slot [Mutton, 1], !Slot [Wool, 2], ~]
+  day_to_gen: 30
+!Id Chicken:
+  inputs: [!Slot [Water, 1], !Slot [Wheat, 1], ~]
+  outputs: [!Slot [ChickenMeat, 1], !Slot [Eggs, 2], ~]
+  day_to_gen: 25

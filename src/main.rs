@@ -1,4 +1,4 @@
-use rise_of_industry_caculator::simulator::*;
+use rise_of_industry_caculator::backend::*;
 
 fn main() {
     recipe::RECIPES.iter().for_each(|(name, recipe)| {

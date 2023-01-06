@@ -17,7 +17,10 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use serde_derive::Deserialize;
 
-use super::productivity::{Productivity, Speed};
+use super::{
+    money::Money,
+    productivity::{Productivity, Speed},
+};
 
 #[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
 pub struct Id(String);
@@ -25,6 +28,11 @@ pub struct Id(String);
 pub static RECIPES: Lazy<HashMap<Id, Recipe>> = Lazy::new(|| {
     const RECIPE_RAW: &'static str = include_str!("../../data/recipes.yaml");
     serde_yaml::from_str(RECIPE_RAW).unwrap()
+});
+
+pub static PRICES: Lazy<HashMap<Item, Money>> = Lazy::new(|| {
+    const PRICES_RAW: &'static str = include_str!("../../data/global_market_prices.yaml");
+    serde_yaml::from_str(PRICES_RAW).unwrap()
 });
 
 #[derive(PartialEq, Debug, Eq, PartialOrd, Ord, Hash, Clone, Copy, Deserialize)]

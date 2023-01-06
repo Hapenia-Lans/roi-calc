@@ -19,10 +19,10 @@
 		"scope": "yaml",
 		"prefix": "/recipe",
 		"body": [
-			"inputs: [${1:~}, ${2:~}, ${3:~}]",
-			"outputs: [${4:~}, ${5:~}, ${6:~}]",
-			"day_to_gen: $7",
-			"building: !$8",
+			"!Id $1:",
+			"  inputs: [${2:~}, ${3:~}, ${4:~}]",
+			"  outputs: [${5:~}, ${6:~}, ${7:~}]",
+			"  day_to_gen: $8",
 		]
 	}
 }

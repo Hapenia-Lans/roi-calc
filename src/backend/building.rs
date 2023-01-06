@@ -17,7 +17,11 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use serde_derive::Deserialize;
 
-use super::{money, productivity::Productivity, recipe::Recipe};
+use super::{
+    money,
+    productivity::Productivity,
+    recipe::{Id, Recipe},
+};
 
 pub enum Error {
     InfoNotFoundError,
@@ -37,7 +41,7 @@ pub enum Info {
 
 #[derive(Debug, Deserialize)]
 pub struct CollectorInfo {
-    pub recipes: Vec<String>,
+    pub recipes: Vec<Id>,
     pub price: money::Money,
     pub upkeep: money::Money,
     pub collector_price: money::Money,
@@ -46,7 +50,7 @@ pub struct CollectorInfo {
 
 #[derive(Debug, Deserialize)]
 pub struct FarmInfo {
-    pub recipes: Vec<String>,
+    pub recipes: Vec<Id>,
     pub price: money::Money,
     pub upkeep: money::Money,
     pub field_price: money::Money,
@@ -55,7 +59,7 @@ pub struct FarmInfo {
 
 #[derive(Debug, Deserialize)]
 pub struct FactoryInfo {
-    pub recipes: Vec<String>,
+    pub recipes: Vec<Id>,
     pub price: money::Money,
     pub upkeep: money::Money,
 }
