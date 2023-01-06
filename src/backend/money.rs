@@ -97,7 +97,7 @@ impl Mul<f64> for Money {
 
 #[test]
 fn test_money_to_string() {
-    let m_one= Money(394);
+    let m_one = Money(394);
     let m_kilo = Money(1024);
     let m_million = Money(1_900_030);
     assert_eq!(m_one.to_string(), "$394");
