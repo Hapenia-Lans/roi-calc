@@ -13,77 +13,77 @@
 # limitations under the License.
 
 # Collectors,
-Lumberyard: !Collector # 伐木场
+!Collector Lumberyard: !Collector # 伐木场
   recipes:
     - !Id Wood
   price: 125000
   upkeep: 3125
   collector_price: 75000
   collector_upkeep: 1875
-IronMine: !Collector # 铁矿
+!Collector IronMine: !Collector # 铁矿
   recipes:
     - !Id IronOre
   price: 225000
   upkeep: 5625
   collector_price: 175000
   collector_upkeep: 4375
-CoalMine: !Collector # 煤矿
+!Collector CoalMine: !Collector # 煤矿
   recipes:
     - !Id Coal
   price: 225000
   upkeep: 5625
   collector_price: 125000
   collector_upkeep: 4375
-CopperMine: !Collector # 铜矿
+!Collector CopperMine: !Collector # 铜矿
   recipes:
     - !Id Copper
   price: 225000
   upkeep: 5625
   collector_price: 175000
   collector_upkeep: 4375
-WaterSiphon: !Collector # 水厂
+!Collector WaterSiphon: !Collector # 水厂
   recipes:
     - !Id Water-Siphon
   price: 125000
   upkeep: 3125
   collector_price: 75000
   collector_upkeep: 1875
-FishermansPier: !Collector # 渔民码头
+!Collector FishermansPier: !Collector # 渔民码头
   recipes:
     - !Id Fish
   price: 150000
   upkeep: 3750
   collector_price: 100000
   collector_upkeep: 2500
-GasPump: !Collector # 天然气厂
+!Collector GasPump: !Collector # 天然气厂
   recipes:
     - !Id Gas
   price: 275000
   upkeep: 6875
   collector_price: 225000
   collector_upkeep: 5625
-OilDrill: !Collector # 石油钻井
+!Collector OilDrill: !Collector # 石油钻井
   recipes:
     - !Id Oil
   price: 275000
   upkeep: 6875
   collector_price: 225000
   collector_upkeep: 5625
-SandCollector: !Collector # 采沙场
+!Collector SandCollector: !Collector # 采沙场
   recipes:
     - !Id Sand
   price: 125000
   upkeep: 3125
   collector_price: 75000
   collector_upkeep: 1875
-WaterWell: !Collector # 水井
+!Collector WaterWell: !Collector # 水井
   recipes:
     - !Id Water-Well
   price: 150000
   upkeep: 3750
   collector_price: 100000
   collector_upkeep: 2500
-OffShoreOilDrill: !Collector # 海上石油钻井平台
+!Collector OffShoreOilDrill: !Collector # 海上石油钻井平台
   recipes:
     - !Id Oil
   price: 275000
@@ -91,7 +91,7 @@ OffShoreOilDrill: !Collector # 海上石油钻井平台
   collector_price: 225000
   collector_upkeep: 5625
 # Farms
-CropFarm: !Farm # 农场
+!Farm CropFarm: !Farm # 农场
   recipes:
     - !Id Hops
     - !Id Wheat
@@ -101,7 +101,7 @@ CropFarm: !Farm # 农场
   upkeep: 3125
   field_price: 75000
   field_upkeep: 1875
-Orchard: !Farm # 果园
+!Farm Orchard: !Farm # 果园
   recipes:
     - !Id Apples
     - !Id Oranges
@@ -112,7 +112,7 @@ Orchard: !Farm # 果园
   upkeep: 3750
   field_price: 100000
   field_upkeep: 2500
-Plantation: !Farm   # 种植园
+!Farm Plantation: !Farm   # 种植园
   recipes:
     - !Id Cocoa
     - !Id Berries
@@ -122,7 +122,7 @@ Plantation: !Farm   # 种植园
   upkeep: 4375
   field_price: 125000
   field_upkeep: 3125
-LiveStockFarm: !Farm # 牧场
+!Farm LiveStockFarm: !Farm # 牧场
   recipes:
     - !Id Cow
     - !Id Sheep

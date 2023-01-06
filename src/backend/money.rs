@@ -17,26 +17,35 @@ use std::ops::{Add, AddAssign, Mul, Sub};
 use serde_derive::Deserialize;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Deserialize, Debug)]
-pub struct Money(u64);
+pub struct Money(i64);
+
+impl Money {
+    pub fn zero() -> Money {
+        Money(0)
+    }
+}
 
 impl ToString for Money {
     fn to_string(&self) -> String {
         match self.0 {
+            i64::MIN..=-1_000_000 => format!("-${:.2}M", -self.0 as f64 / 1_000_000 as f64),
+            -999_999..=-1_000 => format!("-${:.2}K", -self.0 as f64 / 1_000 as f64),
+            -999..=-1 => format!("-${}", -self.0),
             0..=999 => format!("${}", self.0),
             1_000..=999_999 => format!("${:.2}K", self.0 as f64 / 1_000 as f64),
-            _ => format!("${:.2}M", self.0 as f64 / 1_000_000 as f64),
+            1_000_000..=i64::MAX => format!("${:.2}M", self.0 as f64 / 1_000_000 as f64),
         }
     }
 }
 
-impl From<u64> for Money {
-    fn from(value: u64) -> Self {
+impl From<i64> for Money {
+    fn from(value: i64) -> Self {
         Money(value)
     }
 }
 
 impl Money {
-    pub fn value(&self) -> u64 {
+    pub fn value(&self) -> i64 {
         self.0
     }
 }
@@ -63,7 +72,7 @@ impl Sub<Money> for Money {
     }
 }
 
-impl Mul<Money> for u64 {
+impl Mul<Money> for i64 {
     type Output = Money;
 
     fn mul(self, rhs: Money) -> Self::Output {
@@ -71,10 +80,10 @@ impl Mul<Money> for u64 {
     }
 }
 
-impl Mul<u64> for Money {
+impl Mul<i64> for Money {
     type Output = Money;
 
-    fn mul(self, rhs: u64) -> Self::Output {
+    fn mul(self, rhs: i64) -> Self::Output {
         Money(self.0 * rhs)
     }
 }
@@ -83,7 +92,7 @@ impl Mul<Money> for f64 {
     type Output = Money;
 
     fn mul(self, rhs: Money) -> Self::Output {
-        Money(f64::round(self) as u64 * rhs.0)
+        Money(f64::round(rhs.0 as f64 * self) as i64)
     }
 }
 
@@ -91,15 +100,21 @@ impl Mul<f64> for Money {
     type Output = Money;
 
     fn mul(self, rhs: f64) -> Self::Output {
-        Money(f64::round(rhs) as u64 * self.0)
+        Money(f64::round(self.0 as f64 * rhs) as i64)
     }
 }
 
 #[test]
 fn test_money_to_string() {
+    let m_mo = Money(-231);
+    let m_mk = Money(-2_131);
+    let m_mm = Money(-12_931_904);
     let m_one = Money(394);
-    let m_kilo = Money(1024);
+    let m_kilo = Money(1_024);
     let m_million = Money(1_900_030);
+    assert_eq!(m_mo.to_string(), "-$231");
+    assert_eq!(m_mk.to_string(), "-$2.13K");
+    assert_eq!(m_mm.to_string(), "-$12.93M");
     assert_eq!(m_one.to_string(), "$394");
     assert_eq!(m_kilo.to_string(), "$1.02K");
     assert_eq!(m_million.to_string(), "$1.90M");

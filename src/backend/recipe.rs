@@ -17,25 +17,39 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use serde_derive::Deserialize;
 
+use enum_iterator_derive::Sequence;
+
 use super::{
     money::Money,
     productivity::{Productivity, Speed},
 };
 
-#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Hash)]
 pub struct Id(String);
+
+impl ToString for Id {
+    fn to_string(&self) -> String {
+        self.0.clone()
+    }
+}
 
 pub static RECIPES: Lazy<HashMap<Id, Recipe>> = Lazy::new(|| {
     const RECIPE_RAW: &'static str = include_str!("../../data/recipes.yaml");
-    serde_yaml::from_str(RECIPE_RAW).unwrap()
+    match serde_yaml::from_str(RECIPE_RAW) {
+        Ok(x) => x,
+        Err(e) => unreachable!("{}", e),
+    }
 });
 
-pub static PRICES: Lazy<HashMap<Item, Money>> = Lazy::new(|| {
+static PRICES: Lazy<HashMap<Item, Money>> = Lazy::new(|| {
     const PRICES_RAW: &'static str = include_str!("../../data/global_market_prices.yaml");
-    serde_yaml::from_str(PRICES_RAW).unwrap()
+    match serde_yaml::from_str(PRICES_RAW) {
+        Ok(x) => x,
+        Err(e) => unreachable!("{}", e),
+    }
 });
 
-#[derive(PartialEq, Debug, Eq, PartialOrd, Ord, Hash, Clone, Copy, Deserialize)]
+#[derive(PartialEq, Debug, Eq, PartialOrd, Ord, Hash, Clone, Copy, Deserialize, Sequence)]
 pub enum Item {
     Water,              // 水
     Sand,               // 沙子
@@ -170,6 +184,22 @@ pub enum Item {
     Car,                // 汽车
     FirstComputer,      // 第一台电脑
     PremadeDinner,      // 预制晚餐
+}
+
+impl Item {
+    pub fn price(&self) -> Money {
+        match PRICES.get(&self) {
+            Some(x) => *x,
+            None => unreachable!(),
+        }
+    }
+}
+
+pub fn get_recipe(id: &Id) -> &'static Recipe {
+    match RECIPES.get(id) {
+        Some(x) => x,
+        None => unreachable!(),
+    }
 }
 
 #[derive(Clone, Copy, Debug, Deserialize)]

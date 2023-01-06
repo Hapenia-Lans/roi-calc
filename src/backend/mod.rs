@@ -22,41 +22,51 @@ pub mod productivity;
 
 use std::collections::HashMap;
 
-use recipe::Recipe;
+use building::types;
 
-pub enum Error {
-    SimulatorCreationFailed(String),
+use recipe::Id;
+
+#[derive(Debug)]
+pub struct Error(Box<ErrorImpl>);
+
+#[derive(Debug)]
+pub enum ErrorImpl {
+    SimulatorCreationFailed(building::Error),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
 
 impl From<building::Error> for Error {
     fn from(value: building::Error) -> Self {
-        match value {
-            building::Error::InfoNotFoundError => {
-                Self::SimulatorCreationFailed(String::from("Building infomation not found."))
-            }
-        }
+        Self(Box::new(ErrorImpl::SimulatorCreationFailed(value)))
     }
 }
+
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Error: {:?}", self.0)
+    }
+}
+
+impl std::error::Error for Error {}
 
 #[derive(Clone)]
 pub enum Condition {
     Collector {
-        building_type: building::Type,
-        recipe: &'static Recipe, // 对全局的 RECIPES 的引用
+        building_type: types::Collector,
+        recipe_id: Id, // 对全局的 RECIPES 的引用
         worker_wage: building::WorkerWage,
         collector_amount: building::OutbuildingAmount,
     },
     Farm {
-        building_type: building::Type,
-        recipe: &'static Recipe, // 对全局的 RECIPES 的引用
+        building_type: types::Farm,
+        recipe_id: Id, // 对全局的 RECIPES 的引用
         worker_wage: building::WorkerWage,
         field_amount: building::OutbuildingAmount,
     },
     Factory {
-        building_type: building::Type,
-        recipe: &'static Recipe, // 对全局的 RECIPES 的引用
+        building_type: types::Factory,
+        recipe_id: Id, // 对全局的 RECIPES 的引用
         worker_wage: building::WorkerWage,
     },
 }
@@ -64,23 +74,27 @@ pub enum Condition {
 // 模拟报告。
 pub struct Report {
     productivity: productivity::Productivity,
-    total_buildings: HashMap<building::Type, u32>,
-    total_price: money::Money,
-    total_upkeep: money::Money,
+    total_buildings: HashMap<types::Type, u32>,
+    total_price: money::Money,              // 建筑总价格
+    estimated_monthly_upkeep: money::Money, // 预计每月维护费
+    estimated_monthly_sales: money::Money,  // 预计月销售额
 }
 
 impl Report {
     pub fn productivity(&self) -> &productivity::Productivity {
         &self.productivity
     }
-    pub fn total_buildings(&self) -> &HashMap<building::Type, u32> {
+    pub fn total_buildings(&self) -> &HashMap<types::Type, u32> {
         &self.total_buildings
     }
-    pub fn total_price(&self) -> money::Money {
+    pub fn estimated_monthly_sales(&self) -> money::Money {
         self.total_price
     }
-    pub fn total_upkeep(&self) -> money::Money {
-        self.total_upkeep
+    pub fn estimated_monthly_upkeep(&self) -> money::Money {
+        self.estimated_monthly_upkeep
+    }
+    pub fn estimated_monthly_profit(&self) -> money::Money {
+        self.estimated_monthly_sales - self.estimated_monthly_upkeep
     }
 }
 
@@ -95,33 +109,33 @@ impl Simulator {
             let building: Box<dyn building::Building> = match cond {
                 Condition::Collector {
                     building_type,
-                    recipe,
+                    recipe_id,
                     worker_wage,
                     collector_amount,
                 } => Box::new(building::CollectorPlant::create(
                     *building_type,
                     *collector_amount,
-                    recipe,
+                    recipe::get_recipe(recipe_id),
                     *worker_wage,
                 )?),
                 Condition::Farm {
                     building_type,
-                    recipe,
+                    recipe_id,
                     worker_wage,
                     field_amount,
                 } => Box::new(building::Farm::create(
                     *building_type,
                     *field_amount,
-                    recipe,
+                    recipe::get_recipe(recipe_id),
                     *worker_wage,
                 )?),
                 Condition::Factory {
                     building_type,
-                    recipe,
+                    recipe_id,
                     worker_wage,
                 } => Box::new(building::Factory::create(
                     *building_type,
-                    recipe,
+                    recipe::get_recipe(recipe_id),
                     *worker_wage,
                 )?),
             };
@@ -133,25 +147,27 @@ impl Simulator {
     pub fn simulate(&self) -> Report {
         let mut productivity: productivity::Productivity =
             productivity::Productivity::new(HashMap::new());
-        let mut total_buildings: HashMap<building::Type, u32> = HashMap::new();
+        let mut total_buildings: HashMap<types::Type, u32> = HashMap::new();
         let mut total_price = money::Money::from(0);
-        let mut total_upkeep = money::Money::from(0);
+        let mut estimated_monthly_upkeep = money::Money::from(0);
         for i in self.buildings.iter() {
             let plant_type = i.plant_type();
             let prod = i.productivity();
             total_price += i.price();
-            total_upkeep += i.upkeep();
+            estimated_monthly_upkeep += i.upkeep();
             productivity += prod;
             total_buildings
                 .entry(plant_type)
                 .and_modify(|amount| *amount += 1)
                 .or_insert(1);
         }
+        let estimated_monthly_sales = productivity.estimated_monthly_sales();
         Report {
             productivity,
             total_buildings,
             total_price,
-            total_upkeep,
+            estimated_monthly_upkeep,
+            estimated_monthly_sales,
         }
     }
 }

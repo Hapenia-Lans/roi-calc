@@ -12,96 +12,124 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::collections::HashMap;
+use std::fmt::Display;
 
-use once_cell::sync::Lazy;
-use serde_derive::Deserialize;
+use super::{money, productivity::Productivity, recipe::Recipe};
 
-use super::{
-    money,
-    productivity::Productivity,
-    recipe::{Id, Recipe},
-};
+use enum_iterator_derive::Sequence;
 
+#[derive(Debug)]
 pub enum Error {
     InfoNotFoundError,
 }
 
-pub static INFOS: Lazy<HashMap<Type, Info>> = Lazy::new(|| {
-    const INFO_RAW: &'static str = include_str!("../../data/building_info.yaml");
-    serde_yaml::from_str(INFO_RAW).unwrap()
-});
+pub mod info {
+    use super::super::recipe::Id;
 
-#[derive(Debug, Deserialize)]
-pub enum Info {
-    Collector(CollectorInfo),
-    Farm(FarmInfo),
-    Factory(FactoryInfo),
+    use super::{money, types::Type};
+    use std::collections::HashMap;
+
+    use once_cell::sync::Lazy;
+    use serde_derive::Deserialize;
+
+    pub static INFOS: Lazy<HashMap<Type, Info>> = Lazy::new(|| {
+        const INFO_RAW: &'static str = include_str!("../../data/building_info.yaml");
+        serde_yaml::from_str(INFO_RAW).unwrap()
+    });
+
+    #[derive(Debug, Deserialize)]
+    pub enum Info {
+        Collector(Collector),
+        Farm(Farm),
+        Factory(Factory),
+    }
+
+    #[derive(Debug, Deserialize)]
+    pub struct Collector {
+        pub recipes: Vec<Id>,
+        pub price: money::Money,
+        pub upkeep: money::Money,
+        pub collector_price: money::Money,
+        pub collector_upkeep: money::Money,
+    }
+
+    #[derive(Debug, Deserialize)]
+    pub struct Farm {
+        pub recipes: Vec<Id>,
+        pub price: money::Money,
+        pub upkeep: money::Money,
+        pub field_price: money::Money,
+        pub field_upkeep: money::Money,
+    }
+
+    #[derive(Debug, Deserialize)]
+    pub struct Factory {
+        pub recipes: Vec<Id>,
+        pub price: money::Money,
+        pub upkeep: money::Money,
+    }
 }
 
-#[derive(Debug, Deserialize)]
-pub struct CollectorInfo {
-    pub recipes: Vec<Id>,
-    pub price: money::Money,
-    pub upkeep: money::Money,
-    pub collector_price: money::Money,
-    pub collector_upkeep: money::Money,
+use info::Info;
+
+pub mod types {
+
+    use enum_iterator_derive::Sequence;
+    use serde_derive::Deserialize;
+
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize)]
+    pub enum Type {
+        Collector(Collector),
+        Farm(Farm),
+        Factory(Factory),
+    }
+
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence)]
+    pub enum Collector {
+        Lumberyard,       // 伐木场
+        IronMine,         // 铁矿
+        CoalMine,         // 煤矿
+        CopperMine,       // 铜矿
+        WaterSiphon,      // 水厂
+        FishermansPier,   // 渔民码头
+        GasPump,          // 天然气厂
+        OilDrill,         // 石油钻井
+        SandCollector,    // 采沙场
+        WaterWell,        // 水井
+        OffShoreOilDrill, // 海上石油钻井平台
+    }
+
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence)]
+    pub enum Farm {
+        CropFarm,      // 农场
+        LiveStockFarm, // 牧场
+        Orchard,       // 果园
+        Plantation,    // 种植园}
+    }
+
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence)]
+    pub enum Factory {
+        DrinksFactory,        // 饮料厂
+        PreservationFactory,  // 预制食品厂
+        FoodFactory,          // 食品厂
+        BreweryAndDistillery, // 酒厂
+        PaperMill,            // 造纸厂
+        ToyFactory,           // 玩具厂
+        TextileFactory,       // 纺织厂
+        CarpentryCenter,      // 木工房
+        // Heavy Industry,
+        AutomotiveFactory,    // 汽车厂
+        HomeGoodsFactory,     // 家具厂
+        GlassworksAndSmelter, // 玻璃厂
+        PetrochemicalPlant,   // 化工厂
+        // Prototype Factories
+        ComputerMegaFactory,   // 计算机大型工厂
+        MealMegaFactory,       // 食品大型工厂
+        AutomobileMegaFactory, // 汽车大型工厂
+    }
 }
 
-#[derive(Debug, Deserialize)]
-pub struct FarmInfo {
-    pub recipes: Vec<Id>,
-    pub price: money::Money,
-    pub upkeep: money::Money,
-    pub field_price: money::Money,
-    pub field_upkeep: money::Money,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct FactoryInfo {
-    pub recipes: Vec<Id>,
-    pub price: money::Money,
-    pub upkeep: money::Money,
-}
-
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize)]
-pub enum Type {
-    // Collectors,
-    Lumberyard,       // 伐木场
-    IronMine,         // 铁矿
-    CoalMine,         // 煤矿
-    CopperMine,       // 铜矿
-    WaterSiphon,      // 水厂
-    FishermansPier,   // 渔民码头
-    GasPump,          // 天然气厂
-    OilDrill,         // 石油钻井
-    SandCollector,    // 采沙场
-    WaterWell,        // 水井
-    OffShoreOilDrill, // 海上石油钻井平台
-    // Farms
-    CropFarm,      // 农场
-    LiveStockFarm, // 牧场
-    Orchard,       // 果园
-    Plantation,    // 种植园
-    // Light Industry
-    DrinksFactory,        // 饮料厂
-    PreservationFactory,  // 预制食品厂
-    FoodFactory,          // 食品厂
-    BreweryAndDistillery, // 酒厂
-    PaperMill,            // 造纸厂
-    ToyFactory,           // 玩具厂
-    TextileFactory,       // 纺织厂
-    CarpentryCenter,      // 木工房
-    // Heavy Industry,
-    AutomotiveFactory,    // 汽车厂
-    HomeGoodsFactory,     // 家具厂
-    GlassworksAndSmelter, // 玻璃厂
-    PetrochemicalPlant,   // 化工厂
-    // Prototype Factories
-    ComputerMegaFactory,   // 计算机大型工厂
-    MealMegaFactory,       // 食品大型工厂
-    AutomobileMegaFactory, // 汽车大型工厂
-}
+use types::Type;
 
 /// 附属建筑数量。
 #[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
@@ -113,7 +141,7 @@ pub enum OutbuildingAmount {
     Five = 5,
 }
 
-#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
+#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Sequence)]
 pub enum WorkerWage {
     Percent25,
     Percent50,
@@ -122,6 +150,24 @@ pub enum WorkerWage {
     Percent125,
     Percent150,
     Percent200,
+}
+
+impl Display for WorkerWage {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                WorkerWage::Percent25 => "25%",
+                WorkerWage::Percent50 => "50%",
+                WorkerWage::Percent75 => "75%",
+                WorkerWage::Percent100 => "100%",
+                WorkerWage::Percent125 => "125%",
+                WorkerWage::Percent150 => "150%",
+                WorkerWage::Percent200 => "200%",
+            }
+        )
+    }
 }
 
 impl WorkerWage {
@@ -139,7 +185,7 @@ impl WorkerWage {
 }
 
 pub trait Building {
-    fn plant_type(&self) -> Type;
+    fn plant_type(&self) -> types::Type;
 
     /// 计算本建筑的产能。
     fn productivity(&self) -> Productivity;
@@ -150,21 +196,21 @@ pub trait Building {
 }
 
 pub struct CollectorPlant {
-    plant_type: Type, // 类别，这里的前缀仅仅是为了避免与保留字重名。对于不重名的情况，按照风格指南是不应该有前缀的。
+    plant_type: types::Collector, // 类别，这里的前缀仅仅是为了避免与保留字重名。对于不重名的情况，按照风格指南是不应该有前缀的。
     collector_amount: OutbuildingAmount, // 收集器数量。
-    recipe: &'static Recipe, // 配方
-    worker_wage: WorkerWage, // 工人工资
-    info: &'static CollectorInfo,
+    recipe: &'static Recipe,      // 配方
+    worker_wage: WorkerWage,      // 工人工资
+    info: &'static info::Collector,
 }
 
 impl CollectorPlant {
     pub fn create(
-        plant_type: Type,
+        plant_type: types::Collector,
         collector_amount: OutbuildingAmount,
         recipe: &'static Recipe,
         worker_wage: WorkerWage,
     ) -> Result<Self, Error> {
-        let Some(Info::Collector(info)) = INFOS.get(&plant_type) else {
+        let Some(Info::Collector(info)) = info::INFOS.get(&Type::Collector(plant_type)) else {
                 return Err(Error::InfoNotFoundError);
             };
         Ok(CollectorPlant {
@@ -184,35 +230,35 @@ impl Building for CollectorPlant {
     }
 
     fn price(&self) -> money::Money {
-        self.info.price + self.info.collector_price * self.collector_amount as u64
+        self.info.price + self.info.collector_price * self.collector_amount as i64
     }
 
     fn upkeep(&self) -> money::Money {
         self.info.upkeep
-            + self.info.collector_upkeep * self.collector_amount as u64 * self.worker_wage.value()
+            + self.info.collector_upkeep * self.collector_amount as i64 * self.worker_wage.value()
     }
 
-    fn plant_type(&self) -> Type {
-        self.plant_type
+    fn plant_type(&self) -> types::Type {
+        types::Type::Collector(self.plant_type)
     }
 }
 
 pub struct Farm {
-    plant_type: Type,
+    plant_type: types::Farm,
     field_amount: OutbuildingAmount,
     recipe: &'static Recipe, // 配方
     worker_wage: WorkerWage, // 工人工资
-    info: &'static FarmInfo,
+    info: &'static info::Farm,
 }
 
 impl Farm {
     pub fn create(
-        plant_type: Type,
+        plant_type: types::Farm,
         field_amount: OutbuildingAmount,
         recipe: &'static Recipe,
         worker_wage: WorkerWage,
     ) -> Result<Self, Error> {
-        let Some(Info::Farm(info)) = INFOS.get(&plant_type) else {
+        let Some(Info::Farm(info)) = info::INFOS.get(&Type::Farm(plant_type)) else {
                 return Err(Error::InfoNotFoundError);
             };
         Ok(Farm {
@@ -226,8 +272,8 @@ impl Farm {
 }
 
 impl Building for Farm {
-    fn plant_type(&self) -> Type {
-        self.plant_type
+    fn plant_type(&self) -> types::Type {
+        Type::Farm(self.plant_type)
     }
 
     fn productivity(&self) -> Productivity {
@@ -235,29 +281,29 @@ impl Building for Farm {
     }
 
     fn price(&self) -> money::Money {
-        self.info.price + (self.field_amount as u64 * self.info.field_price)
+        self.info.price + (self.field_amount as i64 * self.info.field_price)
     }
 
     fn upkeep(&self) -> money::Money {
         self.info.upkeep
-            + (self.field_amount as u64 * self.info.field_upkeep) * self.worker_wage.value()
+            + (self.field_amount as i64 * self.info.field_upkeep) * self.worker_wage.value()
     }
 }
 
 pub struct Factory {
-    plant_type: Type,
+    plant_type: types::Factory,
     recipe: &'static Recipe, // 配方
     worker_wage: WorkerWage, // 工人工资
-    info: &'static FactoryInfo,
+    info: &'static info::Factory,
 }
 
 impl Factory {
     pub fn create(
-        plant_type: Type,
+        plant_type: types::Factory,
         recipe: &'static Recipe,
         worker_wage: WorkerWage,
     ) -> Result<Self, Error> {
-        let Some(Info::Factory(info)) = INFOS.get(&plant_type) else {
+        let Some(Info::Factory(info)) = info::INFOS.get(&Type::Factory(plant_type)) else {
                 return Err(Error::InfoNotFoundError);
             };
         Ok(Factory {
@@ -271,7 +317,7 @@ impl Factory {
 
 impl Building for Factory {
     fn plant_type(&self) -> Type {
-        self.plant_type
+        Type::Factory(self.plant_type)
     }
 
     fn productivity(&self) -> Productivity {

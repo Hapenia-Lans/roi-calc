@@ -23,6 +23,18 @@ use super::{money, recipe::Item};
 #[derive(Clone, Debug, Copy, PartialEq, PartialOrd)]
 pub struct Speed(f64);
 
+impl Speed {
+    pub fn daily(&self) -> f64 {
+        self.0
+    }
+    pub fn monthly(&self) -> f64 {
+        self.0 * 30.0
+    }
+    pub fn yearly(&self) -> f64 {
+        self.0 * 360.0
+    }
+}
+
 impl From<f64> for Speed {
     fn from(value: f64) -> Self {
         Speed(value)
@@ -80,8 +92,31 @@ impl Productivity {
         Productivity { inner }
     }
 
-    pub fn earning(&self) -> money::Money {
-        todo!()
+    pub fn estimated_daily_sales(&self) -> money::Money {
+        let val = self
+            .inner
+            .iter()
+            .map(|(item, speed)| item.price().value() as f64 * speed.daily())
+            .sum();
+        money::Money::from(f64::round(val) as i64)
+    }
+
+    pub fn estimated_monthly_sales(&self) -> money::Money {
+        let val = self
+            .inner
+            .iter()
+            .map(|(item, speed)| item.price().value() as f64 * speed.monthly())
+            .sum();
+        money::Money::from(f64::round(val) as i64)
+    }
+
+    pub fn estimated_yearly_sales(&self) -> money::Money {
+        let val = self
+            .inner
+            .iter()
+            .map(|(item, speed)| item.price().value() as f64 * speed.yearly())
+            .sum();
+        money::Money::from(f64::round(val) as i64)
     }
 }
 

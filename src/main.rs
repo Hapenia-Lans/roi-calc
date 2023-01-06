@@ -1,10 +1,11 @@
-use rise_of_industry_caculator::backend::*;
+
+
+mod backend;
+mod app;
+
+const APP_NAME: &'static str = "ROI Calculator";
 
 fn main() {
-    recipe::RECIPES.iter().for_each(|(name, recipe)| {
-        println!("name: {:?}, recipe: {:?}", name, recipe);
-    });
-    building::INFOS.iter().for_each(|(b_type, inf)| {
-        println!("type: {:?}, info: {:?}", b_type, inf);
-    });
+    let options = eframe::NativeOptions {default_theme: eframe::Theme::Dark, ..Default::default()};
+    eframe::run_native(APP_NAME, options, Box::new(|cc| Box::new(app::App::new(cc))));
 }
