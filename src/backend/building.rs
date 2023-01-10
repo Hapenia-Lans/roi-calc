@@ -26,6 +26,7 @@ pub enum Error {
 pub mod info {
     use super::super::recipe::Id;
 
+    use super::types;
     use super::{money, types::Type};
     use std::collections::HashMap;
 
@@ -42,6 +43,24 @@ pub mod info {
         Collector(Collector),
         Farm(Farm),
         Factory(Factory),
+    }
+
+    impl From<Collector> for Info {
+        fn from(value: Collector) -> Self {
+            Info::Collector(value)
+        }
+    }
+
+    impl From<Farm> for Info {
+        fn from(value: Farm) -> Self {
+            Info::Farm(value)
+        }
+    }
+
+    impl From<Factory> for Info {
+        fn from(value: Factory) -> Self {
+            Info::Factory(value)
+        }
     }
 
     #[derive(Debug, Deserialize)]
@@ -67,6 +86,28 @@ pub mod info {
         pub recipes: Vec<Id>,
         pub price: money::Money,
         pub upkeep: money::Money,
+    }
+
+    pub fn get(building_type: Type) -> &'static Info {
+        let Some(info) = INFOS.get(&building_type) else {
+            unreachable!()
+        };
+        info
+    }
+
+    pub fn get_collector_info(collector_type: types::Collector) -> &'static Collector {
+        let Info::Collector(x) = get(Type::Collector(collector_type)) else {unreachable!()};
+        x
+    }
+
+    pub fn get_factory_info(factory_type: types::Factory) -> &'static Factory {
+        let Info::Factory(x) = get(Type::Factory(factory_type)) else {unreachable!()};
+        x
+    }
+
+    pub fn get_farm_info(farm_type: types::Farm) -> &'static Farm {
+        let Info::Farm(x) = get(Type::Farm(farm_type)) else {unreachable!()};
+        x
     }
 }
 
@@ -127,12 +168,28 @@ pub mod types {
         MealMegaFactory,       // 食品大型工厂
         AutomobileMegaFactory, // 汽车大型工厂
     }
+
+    // impl From<Collector> for Type {
+    //     fn from(value: Collector) -> Self {
+    //         Type::Collector(value)
+    //     }
+    // }
+    // impl From<Farm> for Type {
+    //     fn from(value: Farm) -> Self {
+    //         Type::Farm(value)
+    //     }
+    // }
+    // impl From<Factory> for Type {
+    //     fn from(value: Factory) -> Self {
+    //         Type::Factory(value)
+    //     }
+    // }
 }
 
 use types::Type;
 
 /// 附属建筑数量。
-#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
+#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Sequence)]
 pub enum OutbuildingAmount {
     One = 1,
     Two = 2,
@@ -234,8 +291,8 @@ impl Building for CollectorPlant {
     }
 
     fn upkeep(&self) -> money::Money {
-        self.info.upkeep
-            + self.info.collector_upkeep * self.collector_amount as i64 * self.worker_wage.value()
+        (self.info.upkeep
+            + self.info.collector_upkeep * self.collector_amount as i64) * self.worker_wage.value()
     }
 
     fn plant_type(&self) -> types::Type {
@@ -285,8 +342,8 @@ impl Building for Farm {
     }
 
     fn upkeep(&self) -> money::Money {
-        self.info.upkeep
-            + (self.field_amount as i64 * self.info.field_upkeep) * self.worker_wage.value()
+        (self.info.upkeep
+            + (self.field_amount as i64 * self.info.field_upkeep)) * self.worker_wage.value()
     }
 }
 

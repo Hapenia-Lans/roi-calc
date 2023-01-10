@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use std::{
-    collections::HashMap,
+    collections::{hash_map::Iter, HashMap},
     iter::Sum,
     ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign},
 };
@@ -83,6 +83,7 @@ impl MulAssign<f64> for Speed {
     }
 }
 
+#[derive(Debug)]
 pub struct Productivity {
     inner: HashMap<Item, Speed>,
 }
@@ -92,29 +93,24 @@ impl Productivity {
         Productivity { inner }
     }
 
-    pub fn estimated_daily_sales(&self) -> money::Money {
-        let val = self
-            .inner
-            .iter()
-            .map(|(item, speed)| item.price().value() as f64 * speed.daily())
-            .sum();
-        money::Money::from(f64::round(val) as i64)
+    pub fn iter(&self) -> Iter<Item, Speed> {
+        self.inner.iter()
     }
 
     pub fn estimated_monthly_sales(&self) -> money::Money {
         let val = self
             .inner
             .iter()
+            .filter(|(_, speed)| speed.0 > 0.0)
             .map(|(item, speed)| item.price().value() as f64 * speed.monthly())
             .sum();
         money::Money::from(f64::round(val) as i64)
     }
-
-    pub fn estimated_yearly_sales(&self) -> money::Money {
+    pub fn estimated_monthly_material_cost(&self) -> money::Money {
         let val = self
-            .inner
             .iter()
-            .map(|(item, speed)| item.price().value() as f64 * speed.yearly())
+            .filter(|(_, speed)| speed.0 < 0.0)
+            .map(|(item, speed)| item.price().value() as f64 * -speed.monthly())
             .sum();
         money::Money::from(f64::round(val) as i64)
     }

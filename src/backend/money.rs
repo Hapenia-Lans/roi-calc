@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::ops::{Add, AddAssign, Mul, Sub};
+use std::{
+    fmt::Display,
+    ops::{Add, AddAssign, Mul, Sub},
+};
 
 use serde_derive::Deserialize;
 
@@ -25,16 +28,17 @@ impl Money {
     }
 }
 
-impl ToString for Money {
-    fn to_string(&self) -> String {
-        match self.0 {
+impl Display for Money {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let str = match self.0 {
             i64::MIN..=-1_000_000 => format!("-${:.2}M", -self.0 as f64 / 1_000_000 as f64),
             -999_999..=-1_000 => format!("-${:.2}K", -self.0 as f64 / 1_000 as f64),
             -999..=-1 => format!("-${}", -self.0),
             0..=999 => format!("${}", self.0),
             1_000..=999_999 => format!("${:.2}K", self.0 as f64 / 1_000 as f64),
             1_000_000..=i64::MAX => format!("${:.2}M", self.0 as f64 / 1_000_000 as f64),
-        }
+        };
+        write!(f, "{}", str)
     }
 }
 
@@ -103,6 +107,8 @@ impl Mul<f64> for Money {
         Money(f64::round(self.0 as f64 * rhs) as i64)
     }
 }
+
+
 
 #[test]
 fn test_money_to_string() {

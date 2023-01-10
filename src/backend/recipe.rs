@@ -25,7 +25,7 @@ use super::{
 };
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Eq, Hash)]
-pub struct Id(String);
+pub struct Id(pub String);
 
 impl ToString for Id {
     fn to_string(&self) -> String {
@@ -195,7 +195,7 @@ impl Item {
     }
 }
 
-pub fn get_recipe(id: &Id) -> &'static Recipe {
+pub fn get(id: &Id) -> &'static Recipe {
     match RECIPES.get(id) {
         Some(x) => x,
         None => unreachable!(),
@@ -213,25 +213,31 @@ pub struct Recipe {
 }
 
 impl Recipe {
-    pub fn day_to_gen(&self) -> u16 {
-        self.day_to_gen
-    }
-
     pub fn productivity(&self) -> Productivity {
         let inputs_productivity = Productivity::new(
             self.inputs
                 .iter()
                 .filter_map(|&slot| slot)
-                .map(|Slot(item, amount)| (item, Speed::from(amount as f64)))
+                .map(|Slot(item, amount)| {
+                    (
+                        item,
+                        Speed::from(amount as f64) * (-1.0 / self.day_to_gen as f64),
+                    )
+                })
                 .collect(),
         );
         let outputs_productivity = Productivity::new(
             self.outputs
                 .iter()
                 .filter_map(|&slot| slot)
-                .map(|Slot(item, amount)| (item, Speed::from(amount as f64)))
+                .map(|Slot(item, amount)| {
+                    (
+                        item,
+                        Speed::from(amount as f64) * (1.0 / self.day_to_gen as f64),
+                    )
+                })
                 .collect(),
         );
-        (outputs_productivity - inputs_productivity) * (1.0 / self.day_to_gen as f64)
+        outputs_productivity + inputs_productivity
     }
 }

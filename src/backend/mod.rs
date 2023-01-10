@@ -54,47 +54,60 @@ impl std::error::Error for Error {}
 pub enum Condition {
     Collector {
         building_type: types::Collector,
-        recipe_id: Id, // 对全局的 RECIPES 的引用
+        recipe_id: Id,
         worker_wage: building::WorkerWage,
         collector_amount: building::OutbuildingAmount,
     },
     Farm {
         building_type: types::Farm,
-        recipe_id: Id, // 对全局的 RECIPES 的引用
+        recipe_id: Id,
         worker_wage: building::WorkerWage,
         field_amount: building::OutbuildingAmount,
     },
     Factory {
         building_type: types::Factory,
-        recipe_id: Id, // 对全局的 RECIPES 的引用
+        recipe_id: Id,
         worker_wage: building::WorkerWage,
     },
 }
 
+#[derive(Debug)]
 // 模拟报告。
 pub struct Report {
     productivity: productivity::Productivity,
     total_buildings: HashMap<types::Type, u32>,
-    total_price: money::Money,              // 建筑总价格
-    estimated_monthly_upkeep: money::Money, // 预计每月维护费
-    estimated_monthly_sales: money::Money,  // 预计月销售额
+    total_price: money::Money,                     // 建筑总价格
+    estimated_monthly_upkeep: money::Money,        // 预计每月维护费
+    estimated_monthly_material_cost: money::Money, // 预计购买每月原料价格
+    estimated_monthly_sales: money::Money,         // 预计月销售额
 }
 
 impl Report {
+    pub fn total_price(&self) -> money::Money {
+        self.total_price
+    }
     pub fn productivity(&self) -> &productivity::Productivity {
         &self.productivity
     }
     pub fn total_buildings(&self) -> &HashMap<types::Type, u32> {
         &self.total_buildings
     }
-    pub fn estimated_monthly_sales(&self) -> money::Money {
-        self.total_price
+    pub fn monthly_sales(&self) -> money::Money {
+        self.estimated_monthly_sales
     }
-    pub fn estimated_monthly_upkeep(&self) -> money::Money {
+    pub fn monthly_upkeep(&self) -> money::Money {
         self.estimated_monthly_upkeep
     }
-    pub fn estimated_monthly_profit(&self) -> money::Money {
-        self.estimated_monthly_sales - self.estimated_monthly_upkeep
+    pub fn monthly_profit(&self) -> money::Money {
+        self.estimated_monthly_sales
+            - self.estimated_monthly_upkeep
+            - self.estimated_monthly_material_cost
+    }
+    pub fn monthly_material_cost(&self) -> money::Money {
+        self.estimated_monthly_material_cost
+    }
+    pub fn profit_rate(&self) -> f64 {
+        self.monthly_profit().value() as f64 / self.estimated_monthly_sales.value() as f64
     }
 }
 
@@ -115,7 +128,7 @@ impl Simulator {
                 } => Box::new(building::CollectorPlant::create(
                     *building_type,
                     *collector_amount,
-                    recipe::get_recipe(recipe_id),
+                    recipe::get(recipe_id),
                     *worker_wage,
                 )?),
                 Condition::Farm {
@@ -126,7 +139,7 @@ impl Simulator {
                 } => Box::new(building::Farm::create(
                     *building_type,
                     *field_amount,
-                    recipe::get_recipe(recipe_id),
+                    recipe::get(recipe_id),
                     *worker_wage,
                 )?),
                 Condition::Factory {
@@ -135,7 +148,7 @@ impl Simulator {
                     worker_wage,
                 } => Box::new(building::Factory::create(
                     *building_type,
-                    recipe::get_recipe(recipe_id),
+                    recipe::get(recipe_id),
                     *worker_wage,
                 )?),
             };
@@ -162,12 +175,14 @@ impl Simulator {
                 .or_insert(1);
         }
         let estimated_monthly_sales = productivity.estimated_monthly_sales();
+        let estimated_monthly_material_cost = productivity.estimated_monthly_material_cost();
         Report {
             productivity,
             total_buildings,
             total_price,
             estimated_monthly_upkeep,
             estimated_monthly_sales,
+            estimated_monthly_material_cost,
         }
     }
 }
