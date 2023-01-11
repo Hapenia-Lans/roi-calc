@@ -291,8 +291,8 @@ impl Building for CollectorPlant {
     }
 
     fn upkeep(&self) -> money::Money {
-        (self.info.upkeep
-            + self.info.collector_upkeep * self.collector_amount as i64) * self.worker_wage.value()
+        (self.info.upkeep + self.info.collector_upkeep * self.collector_amount as i64)
+            * self.worker_wage.value()
     }
 
     fn plant_type(&self) -> types::Type {
@@ -342,8 +342,8 @@ impl Building for Farm {
     }
 
     fn upkeep(&self) -> money::Money {
-        (self.info.upkeep
-            + (self.field_amount as i64 * self.info.field_upkeep)) * self.worker_wage.value()
+        (self.info.upkeep + (self.field_amount as i64 * self.info.field_upkeep))
+            * self.worker_wage.value()
     }
 }
 

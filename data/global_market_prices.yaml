@@ -43,3 +43,63 @@ Leather: 6260
 Milk: 6260
 Mutton: 5740
 Wool: 2870
+
+
+# 饮品厂
+OrangeJuice: 23700
+GrapeJuice: 24240
+AppleSmoothie: 23700
+BerrySmoothie: 24240
+GrapeJuice: 23700
+SodaWater: 24240
+OrangeSoda: 62730
+
+# FoodFactory
+OliveOil: 22210
+Flour: 21760
+Cheese: 26920
+ChocolateBar: 31150
+ChocolateCake: 38910
+BeefStew: 27830
+Dough: 38830
+Pizza: 50680
+Waffles: 59320
+Burgers: 61310
+BerryPie: 66420
+FishAndChips: 70620
+CiderDonuts: 63440
+FriedChicken: 115520
+CookedVegetables: 108630
+ChickenDinner: 423970
+
+# 玻璃冶炼厂
+Concrete: 20400
+Glass: 16340
+Bricks: 14720
+Steel: 25190
+CopperTubing: 17880
+CopperWire: 17880
+Bottles: 40630
+GlassTubes: 40630
+Cans: 55880
+SteelFrame: 55880
+SteelBarrels: 38250
+Ceramic: 33580
+ComputerMemory: 366810
+
+# Preservation Factory
+ChickenSoup: 26390
+BagOfChips: 47790
+Soup: 14810
+CannedMutton: 50540
+CannedFish: 67320
+
+# Brewery & Distillery
+Vodka: 51280
+Beer: 51280
+BarleyWhiskey: 51280
+HardCider: 23860
+Wine: 23800
+Yeast: 19830
+Biofuel: 37130
+Brandy: 73280

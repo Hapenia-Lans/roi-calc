@@ -132,11 +132,58 @@
   field_price: 150000
   field_upkeep: 3750
 
-# # Light Industry
-# DrinksFactory:        # 饮料厂
-# PreservationFactory:  # 预制食品厂
-# FoodFactory:          # 食品厂
-# BreweryAndDistillery: # 酒厂
+# Light Industry
+!Factory DrinksFactory: !Factory       # 饮料厂
+  recipes:
+    - !Id OrangeJuice
+    - !Id SodaWater
+    - !Id OrangeSoda
+    - !Id BerrySmoothie
+    - !Id AppleSmoothie
+    - !Id GrapeJuice
+  price: 650000
+  upkeep: 16250
+!Factory PreservationFactory: !Factory # 预制食品厂
+  recipes:
+    - !Id Soup
+    - !Id CannedMutton
+    - !Id BagOfChips
+    - !Id CannedFish
+    - !Id ChickenSoup
+  price: 550000
+  upkeep: 13750
+!Factory FoodFactory: !Factory          # 食品厂
+  recipes:
+    - !Id Waffles
+    - !Id Cheese
+    - !Id ChocolateBar
+    - !Id ChocolateCake
+    - !Id Pizza
+    - !Id OliveOil
+    - !Id Burgers
+    - !Id BerryPie
+    - !Id BeefStew
+    - !Id FishAndChips
+    - !Id FriedChicken
+    - !Id CookedVegetables
+    - !Id Dough
+    - !Id CiderDonuts
+    - !Id Flour
+    - !Id ChickenDinner
+  price: 550000
+  upkeep: 13750
+!Factory BreweryAndDistillery: !Factory # 酒厂
+  recipes:
+    - !Id Vodka
+    - !Id Beer
+    - !Id BarleyWhiskey
+    - !Id Biofuel
+    - !Id Brandy
+    - !Id HardCider
+    - !Id Wine
+    - !Id Yeast
+  price: 650000
+  upkeep: 15000
 # PaperMill:            # 造纸厂
 # ToyFactory:           # 玩具厂
 # TextileFactory:       # 纺织厂
@@ -144,7 +191,24 @@
 # # Heavy Industry:
 # AutomotiveFactory:    # 汽车厂
 # HomeGoodsFactory:     # 家具厂
-# GlassworksAndSmelter: # 玻璃厂
+!Factory GlassworksAndSmelter: !Factory # 玻璃厂
+  recipes:
+    - !Id Concrete
+    - !Id Glass
+    - !Id GlassTubes
+    - !Id Bottles
+    - !Id ComputerMemory
+    - !Id Bricks
+    - !Id Cans
+    - !Id Steel
+    - !Id SteelFrame
+    - !Id SteelBarrels
+    - !Id CopperTubing
+    - !Id CopperWire
+    - !Id Ceramic
+  price: 600000
+  upkeep: 15000
+
 # PetrochemicalPlant:   # 化工厂
 # # Prototype Factories
 # ComputerMegaFactory:   # 计算机大型工厂

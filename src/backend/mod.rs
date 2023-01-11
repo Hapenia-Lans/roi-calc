@@ -57,17 +57,20 @@ pub enum Condition {
         recipe_id: Id,
         worker_wage: building::WorkerWage,
         collector_amount: building::OutbuildingAmount,
+        amount: u8,
     },
     Farm {
         building_type: types::Farm,
         recipe_id: Id,
         worker_wage: building::WorkerWage,
         field_amount: building::OutbuildingAmount,
+        amount: u8,
     },
     Factory {
         building_type: types::Factory,
         recipe_id: Id,
         worker_wage: building::WorkerWage,
+        amount: u8,
     },
 }
 
@@ -119,41 +122,56 @@ impl Simulator {
     pub fn from_conditions(conditions: &[Condition]) -> Result<Self> {
         let mut buildings: Vec<Box<dyn building::Building>> = vec![];
         for cond in conditions {
-            let building: Box<dyn building::Building> = match cond {
+            match cond {
                 Condition::Collector {
                     building_type,
                     recipe_id,
                     worker_wage,
                     collector_amount,
-                } => Box::new(building::CollectorPlant::create(
-                    *building_type,
-                    *collector_amount,
-                    recipe::get(recipe_id),
-                    *worker_wage,
-                )?),
+                    amount,
+                } => {
+                    for _ in 0..*amount {
+                        buildings.push(Box::new(building::CollectorPlant::create(
+                            *building_type,
+                            *collector_amount,
+                            recipe::get(recipe_id),
+                            *worker_wage,
+                        )?));
+                    }
+                }
                 Condition::Farm {
                     building_type,
                     recipe_id,
                     worker_wage,
                     field_amount,
-                } => Box::new(building::Farm::create(
-                    *building_type,
-                    *field_amount,
-                    recipe::get(recipe_id),
-                    *worker_wage,
-                )?),
+                    amount,
+                } => {
+                    for _ in 0..*amount {
+                        buildings.push(Box::new(building::Farm::create(
+                            *building_type,
+                            *field_amount,
+                            recipe::get(recipe_id),
+                            *worker_wage,
+                        )?))
+                    }
+                }
                 Condition::Factory {
                     building_type,
                     recipe_id,
                     worker_wage,
-                } => Box::new(building::Factory::create(
-                    *building_type,
-                    recipe::get(recipe_id),
-                    *worker_wage,
-                )?),
-            };
-            buildings.push(building);
+                    amount,
+                } => {
+                    for _ in 0..*amount {
+                        buildings.push(Box::new(building::Factory::create(
+                            *building_type,
+                            recipe::get(recipe_id),
+                            *worker_wage,
+                        )?))
+                    }
+                }
+            }
         }
+        // buildings.push(building);
         Ok(Simulator { buildings })
     }
 

@@ -106,6 +106,8 @@ pub enum Item {
     Soup,               // 汤
     Dye,                // 染料
     Fibers,             // 纤维
+    Bricks,             // 砖块
+    Concrete,           // 混凝土
     LargeFurnitureBase, // 家具底座（大）
     SmallFurnitureBase, // 家具底座（小）
     WoodenBarrels,      // 木桶
@@ -177,7 +179,9 @@ pub enum Item {
     BinarySwitcher,     // 二进制开关
     Processor,          // 处理器
     ComputerMemory,     // 计算机内存
-    FiredChicken,       // 炒鸡肉
+    CiderDonuts,        // 苹果酒甜甜圈
+    FishAndChips,       // 炸鱼薯条
+    FriedChicken,       // 炸鸡
     CookedVegetables,   // 熟蔬菜
     ChickenDinner,      // 鸡肉晚餐
     DinnerContainer,    // 晚餐容器
@@ -190,7 +194,7 @@ impl Item {
     pub fn price(&self) -> Money {
         match PRICES.get(&self) {
             Some(x) => *x,
-            None => unreachable!(),
+            None => unreachable!("Item {:?} has no price!", self),
         }
     }
 }
@@ -198,7 +202,7 @@ impl Item {
 pub fn get(id: &Id) -> &'static Recipe {
     match RECIPES.get(id) {
         Some(x) => x,
-        None => unreachable!(),
+        None => unreachable!("got id=\"{}\", but it's not exists.", id.to_string()),
     }
 }
 

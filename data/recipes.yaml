@@ -124,3 +124,213 @@
   inputs: [!Slot [Water, 1], !Slot [Wheat, 1], ~]
   outputs: [!Slot [ChickenMeat, 1], !Slot [Eggs, 2], ~]
   day_to_gen: 25
+
+# FACTORIES
+
+# DRICKFACTORY
+!Id OrangeJuice:
+  inputs: [!Slot [Oranges, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [OrangeJuice, 2], ~, ~]
+  day_to_gen: 25
+!Id SodaWater:
+  inputs: [!Slot [Sugar, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [SodaWater, 2], ~, ~]
+  day_to_gen: 25
+!Id OrangeSoda:
+  inputs: [!Slot [SodaWater, 1], !Slot [OrangeJuice, 1], !Slot [Bottles, 1]]
+  outputs: [!Slot [OrangeSoda, 2], ~, ~]
+  day_to_gen: 40
+!Id BerrySmoothie:
+  inputs: [!Slot [Berries, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [BerrySmoothie, 2], ~, ~]
+  day_to_gen: 25
+!Id AppleSmoothie:
+  inputs: [!Slot [Apples, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [AppleSmoothie, 2], ~, ~]
+  day_to_gen: 25
+!Id GrapeJuice:
+  inputs: [!Slot [Grapes, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [GrapeJuice, 2], ~, ~]
+  day_to_gen: 25
+# GALSSWORK & SMELTER
+!Id Concrete:
+  inputs: [!Slot [Sand, 2], !Slot [Water, 2], ~]
+  outputs: [!Slot [Concrete, 2], ~, ~]
+  day_to_gen: 20
+!Id Glass:
+  inputs: [!Slot [Sand, 2], !Slot [Coal, 1], ~]
+  outputs: [!Slot [Glass, 2], ~, ~]
+  day_to_gen: 15
+!Id GlassTubes:
+  inputs: [!Slot [Glass, 3], ~, ~]
+  outputs: [!Slot [GlassTubes, 2], ~, ~]
+  day_to_gen: 30
+!Id Bottles:
+  inputs: [!Slot [Glass, 3], ~, ~]
+  outputs: [!Slot [Bottles, 2], ~, ~]
+  day_to_gen: 30
+!Id ComputerMemory:
+  inputs: [!Slot [GlassTubes, 2], !Slot [Diodes, 2], !Slot [RubberTubes, 1]]
+  outputs: [!Slot [ComputerMemory, 1], ~, ~]
+  day_to_gen: 180
+!Id Bricks:
+  inputs: [!Slot [Sand, 2], !Slot [Water, 1], ~]
+  outputs: [!Slot [Bricks, 2], ~, ~]
+  day_to_gen: 15
+!Id Cans:
+  inputs: [!Slot [Steel, 3], ~, ~]
+  outputs: [!Slot [Cans, 2], ~, ~]
+  day_to_gen: 35
+!Id Steel:
+  inputs: [!Slot [IronOre, 2], !Slot [Coal, 1], ~]
+  outputs: [!Slot [Steel, 2], ~, ~]
+  day_to_gen: 20
+!Id SteelFrame:
+  inputs: [!Slot [Steel, 3], ~, ~]
+  outputs: [!Slot [SteelFrame, 2], ~, ~]
+  day_to_gen: 35
+!Id SteelBarrels:
+  inputs: [!Slot [Steel, 2], ~, ~]
+  outputs: [!Slot [SteelBarrels, 2], ~, ~]
+  day_to_gen: 25
+!Id CopperTubing:
+  inputs: [!Slot [Copper, 2], ~, ~]
+  outputs: [!Slot [CopperTubing, 2], ~, ~]
+  day_to_gen: 15
+!Id CopperWire:
+  inputs: [!Slot [Copper, 2], ~, ~]
+  outputs: [!Slot [CopperWire, 2], ~, ~]
+  day_to_gen: 15
+!Id Ceramic:
+  inputs: [!Slot [Glass, 2], !Slot [Sand, 3], ~]
+  outputs: [!Slot [Ceramic, 2], ~, ~]
+  day_to_gen: 25
+# PRESERVATION FACTORY
+!Id Soup:
+  inputs: [!Slot [Vegetables, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [Soup, 2], ~, ~]
+  day_to_gen: 15
+!Id CannedMutton:
+  inputs: [!Slot [Mutton, 3], !Slot [Cans, 1], ~]
+  outputs: [!Slot [CannedMutton, 2], ~, ~]
+  day_to_gen: 35
+!Id BagOfChips:
+  inputs: [!Slot [Potato, 3], !Slot [Parchment, 1], !Slot [OliveOil, 1]]
+  outputs: [!Slot [BagOfChips, 2], ~, ~]
+  day_to_gen: 35
+!Id CannedFish:
+  inputs: [!Slot [Cans, 1], !Slot [Fish, 2], !Slot [OliveOil, 2]]
+  outputs: [!Slot [CannedFish, 2], ~, ~]
+  day_to_gen: 40
+!Id ChickenSoup:
+  inputs: [!Slot [ChickenMeat, 3], !Slot [Water, 1], !Slot [Vegetables ,1]]
+  outputs: [!Slot [ChickenSoup, 2], ~, ~]
+  day_to_gen: 25
+# FOODFACTORY
+!Id Waffles:
+  inputs: [!Slot [Sugar, 1], !Slot [Dough, 2], ~]
+  outputs: [!Slot [Waffles, 2], ~, ~]
+  day_to_gen: 40
+!Id Cheese:
+  inputs: [!Slot [Milk, 3], !Slot [Water, 2], ~]
+  outputs: [!Slot [Cheese, 2], ~, ~]
+  day_to_gen: 25
+!Id ChocolateBar:
+  inputs: [!Slot [Cocoa, 2], !Slot [Milk, 2], !Slot [Sugar, 1]]
+  outputs: [!Slot [ChocolateBar, 2], ~, ~]
+  day_to_gen: 25
+!Id ChocolateCake:
+  inputs: [!Slot [Flour, 2], !Slot [Eggs, 1], !Slot [Cocoa, 1]]
+  outputs: [!Slot [ChocolateCake, 2], ~, ~]
+  day_to_gen: 25
+!Id Pizza:
+  inputs: [!Slot [Dough, 1], !Slot [Cheese, 1], !Slot [Vegetables, 1]]
+  outputs: [!Slot [Pizza, 2], ~, ~]
+  day_to_gen: 35
+!Id OliveOil:
+  inputs: [!Slot [Olives, 2], ~, ~]
+  outputs: [!Slot [OliveOil, 2], ~, ~]
+  day_to_gen: 25
+!Id Burgers:
+  inputs: [!Slot [Dough, 2], !Slot [Beef, 1], !Slot [Vegetables, 1]]
+  outputs: [!Slot [Burgers, 2], ~, ~]
+  day_to_gen: 40
+!Id BerryPie:
+  inputs: [!Slot [Berries, 2], !Slot [Dough, 2], !Slot [Sugar, 1]]
+  outputs: [!Slot [BerryPie, 2], ~, ~]
+  day_to_gen: 40
+!Id BeefStew:
+  inputs: [!Slot [Beef, 3], !Slot [Vegetables, 1], !Slot [Water, 1]]
+  outputs: [!Slot [BeefStew, 1], ~, ~]
+  day_to_gen: 25
+!Id FishAndChips:
+  inputs: [!Slot [Fish, 3], !Slot [BagOfChips, 2], ~]
+  outputs: [!Slot [FishAndChips, 2], ~, ~]
+  day_to_gen: 45
+!Id FriedChicken:
+  inputs: [!Slot [ChickenMeat, 3], !Slot [Flour, 1], !Slot [OliveOil, 1]]
+  outputs: [!Slot [FriedChicken, 1], ~, ~]
+  day_to_gen: 90
+!Id CookedVegetables:
+  inputs: [!Slot [Vegetables, 2], !Slot [Potato, 2], !Slot [OliveOil, 1]]
+  outputs: [!Slot [CookedVegetables, 1], ~, ~]
+  day_to_gen: 90
+!Id Dough:
+  inputs: [!Slot [Flour, 2], !Slot [Water, 1], ~]
+  outputs: [!Slot [Dough, 2], ~, ~]
+  day_to_gen: 30
+!Id CiderDonuts:
+  inputs: [!Slot [HardCider, 1], !Slot [Dough, 2], ~]
+  outputs: [!Slot [CiderDonuts, 2], ~, ~]
+  day_to_gen: 35
+!Id Flour:
+  inputs: [!Slot [Wheat, 2], ~, ~]
+  outputs: [!Slot [Flour, 2], ~, ~]
+  day_to_gen: 25
+!Id ChickenDinner:
+  inputs: [!Slot [FriedChicken, 1], !Slot [CookedVegetables, 1], !Slot [OrangeSoda, 1]]
+  outputs: [!Slot [ChickenDinner, 1], ~, ~]
+  day_to_gen: 180
+!Id Vodka: 
+  inputs: [!Slot [Potato, 3], !Slot [Yeast, 1], !Slot [WoodenBarrels, 1]]
+  outputs: [!Slot [Vodka, 2], ~, ~]
+  day_to_gen: 35
+!Id Beer:
+  inputs: [!Slot [WoodenBarrels, 1], !Slot [Hops, 3], !Slot [Yeast, 1]]
+  outputs: [!Slot [Beer, 2], ~, ~]
+  day_to_gen: 35
+!Id BarleyWhiskey:
+  inputs: [!Slot [Wheat, 3], !Slot [WoodenBarrels, 1], !Slot [Yeast, 1]]
+  outputs: [!Slot [BarleyWhiskey, 2], ~, ~]
+  day_to_gen: 35
+!Id Biofuel:
+  inputs: [!Slot [Potato, 3], !Slot [RefinedOil, 1], ~]
+  outputs: [!Slot [Biofuel, 2], ~, ~]
+  day_to_gen: 25
+!Id Brandy:
+  inputs: [!Slot [Wine, 3], !Slot [Bottles,1], ~]
+  outputs: [!Slot [Brandy, 2], ~, ~]
+  day_to_gen: 45 
+!Id HardCider:
+  inputs: [!Slot [Apples, 1], !Slot [Sugar, 1], ~]
+  outputs: [!Slot [HardCider, 2], ~, ~]
+  day_to_gen: 25
+!Id Wine:
+  inputs: [!Slot [Grapes, 2], ~, ~]
+  outputs: [!Slot [Wine, 2], ~, ~]
+  day_to_gen: 25
+!Id Yeast:
+  inputs: [!Slot [Water, 1], !Slot [Sugar, 1], ~]
+  outputs: [!Slot [Yeast, 2], ~, ~]
+  day_to_gen: 20
+# BREWERY & DISTILLERY
+# PAPERMILL
+# TOY FACTORY
+# TEXTILE FACTORY
+# CARPENTRY CENTER
+# AUTOMOTIVE FACTORY
+# HOMEGOODS FACTORY
+# PETROCHEMICAL PLANT
+# COMPUTER MEGA FACTORY
+# MEAL MEGA FACTORY
+# AUTOMOBILE MEGA FACTORY

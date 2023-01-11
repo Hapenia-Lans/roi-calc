@@ -108,8 +108,6 @@ impl Mul<f64> for Money {
     }
 }
 
-
-
 #[test]
 fn test_money_to_string() {
     let m_mo = Money(-231);
