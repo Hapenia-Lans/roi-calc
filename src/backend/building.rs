@@ -394,6 +394,6 @@ impl Building for Factory {
     }
 
     fn upkeep(&self) -> money::Money {
-        self.info.upkeep
+        self.info.upkeep * self.worker_wage.value()
     }
 }

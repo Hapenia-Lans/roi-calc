@@ -179,8 +179,8 @@ impl Simulator {
         let mut productivity: productivity::Productivity =
             productivity::Productivity::new(HashMap::new());
         let mut total_buildings: HashMap<types::Type, u32> = HashMap::new();
-        let mut total_price = money::Money::from(0);
-        let mut estimated_monthly_upkeep = money::Money::from(0);
+        let mut total_price = money::Money::zero();
+        let mut estimated_monthly_upkeep = money::Money::zero();
         for i in self.buildings.iter() {
             let plant_type = i.plant_type();
             let prod = i.productivity();
