@@ -291,6 +291,7 @@
   inputs: [!Slot [FriedChicken, 1], !Slot [CookedVegetables, 1], !Slot [OrangeSoda, 1]]
   outputs: [!Slot [ChickenDinner, 1], ~, ~]
   day_to_gen: 180
+# BREWERY & DISTILLERY
 !Id Vodka: 
   inputs: [!Slot [Potato, 3], !Slot [Yeast, 1], !Slot [WoodenBarrels, 1]]
   outputs: [!Slot [Vodka, 2], ~, ~]
@@ -323,12 +324,123 @@
   inputs: [!Slot [Water, 1], !Slot [Sugar, 1], ~]
   outputs: [!Slot [Yeast, 2], ~, ~]
   day_to_gen: 20
-# BREWERY & DISTILLERY
 # PAPERMILL
+!Id Books:
+  inputs: [!Slot [PrintedPaper, 2], ~, ~]
+  outputs: [!Slot [Books, 2], ~, ~]
+  day_to_gen: 35
+!Id Ink:
+  inputs: [!Slot [Coal, 1], !Slot [Water, 1], ~]
+  outputs: [!Slot [Ink, 2], ~, ~]
+  day_to_gen: 25
+!Id PrintedPaper:
+  inputs: [!Slot [Parchment, 2], !Slot [Ink, 1], ~]
+  outputs: [!Slot [PrintedPaper, 2], ~, ~]
+  day_to_gen: 30
+!Id PunchCards:
+  inputs: [!Slot [Cardboard, 3], ~, ~]
+  outputs: [!Slot [PunchCards, 2], ~, ~]
+  day_to_gen: 45
+!Id Newspapers:
+  inputs: [!Slot [PrintedPaper, 2], !Slot [Ink, 1], ~]
+  outputs: [!Slot [Newspapers, 2], ~, ~]
+  day_to_gen: 40
+!Id DinnerContainer:
+  inputs: [!Slot [ThinCardboard, 2], !Slot [PlasticCutlery, 2], !Slot [Napkins, 1]]
+  outputs: [!Slot [DinnerContainer, 1], ~, ~]
+  day_to_gen: 180
+!Id HeavyPulp:
+  inputs: [!Slot [Wood, 2], !Slot [Water, 1], ~]
+  outputs: [!Slot [HeavyPulp, 1], ~, ~]
+  day_to_gen: 20
+!Id DeluxeBooks:
+  inputs: [!Slot [PrintedPaper, 2], !Slot [Leather, 1], ~]
+  outputs: [!Slot [DeluxeBooks, 2], ~, ~]
+  day_to_gen: 35
+!Id Parchment:
+  inputs: [!Slot [Wood, 2], !Slot [Water, 1], ~]
+  outputs: [!Slot [Parchment, 2], ~, ~]
+  day_to_gen: 20
+!Id Cardboard:
+  inputs: [!Slot [HeavyPulp, 3], ~, ~]
+  outputs: [!Slot [Cardboard, 2], ~, ~]
+  day_to_gen: 30
+!Id ThinCardboard:
+  inputs: [!Slot [Cardboard, 3], ~, ~]
+  outputs: [!Slot [ThinCardboard, 2], ~, ~]
+  day_to_gen: 45
+# CARPENTRY CENTER
+!Id WoodenPlanks:
+  inputs: [!Slot [Wood, 3], ~, ~]
+  outputs: [!Slot [WoodenPlanks, 2], ~, ~]
+  day_to_gen: 20
+!Id FurnitureBase(S):
+  inputs: [!Slot [WoodenPlanks, 2], ~, ~]
+  outputs: [!Slot [SmallFurnitureBase, 2], ~, ~]
+  day_to_gen: 25
+!Id FurnitureBase(L):
+  inputs: [!Slot [WoodenPlanks, 2], ~, ~]
+  outputs: [!Slot [LargeFurnitureBase, 2], ~, ~]
+  day_to_gen: 25
+!Id Wallboards:
+  inputs: [!Slot [WoodenPlanks, 1], !Slot [CopperTubing, 1], ~]
+  outputs: [!Slot [Wallboards, 1], ~, ~]
+  day_to_gen: 25
+!Id WoodenBarrels:
+  inputs: [!Slot [WoodenPlanks, 2], ~,~]
+  outputs: [!Slot [WoodenBarrels, 2], ~, ~]
+  day_to_gen: 25
+!Id CarSeat:
+  inputs: [!Slot [SmallFurnitureBase, 2], !Slot [Cotton, 1], ~]
+  outputs: [!Slot [CarSeat, 2], ~, ~]
+  day_to_gen: 35
+!Id Sofa:
+  inputs: [!Slot [LargeFurnitureBase, 2], !Slot [HeavyFabric, 2], !Slot [Cotton, 2]]
+  outputs: [!Slot [Sofa, 2], ~, ~]
+  day_to_gen: 45
+!Id LeatherFurniture:
+  inputs: [!Slot [SmallFurnitureBase, 2], !Slot [Leather, 2], ~]
+  outputs: [!Slot [LeatherFurniture, 2], ~, ~]
+  day_to_gen: 35
+!Id PlasticFurniture:
+  inputs: [!Slot [SmallFurnitureBase, 2], !Slot [Plastic, 2], ~]
+  outputs: [!Slot [PlasticFurniture, 2], ~, ~]
+  day_to_gen: 45
+!Id ReinforcedWall:
+  inputs: [!Slot [Concrete, 3], !Slot [SteelFrame, 1], ~]
+  outputs: [!Slot [ReinforcedWall, 2], ~, ~]
+  day_to_gen: 45
+!Id OfficeFurniture:
+  inputs: [!Slot [LargeFurnitureBase, 2], !Slot [Steel, 2], ~]
+  outputs: [!Slot [OfficeFurniture, 2], ~, ~]
+  day_to_gen: 45
+# AUTOMOTIVE FACTORY
+!Id CombustionEngine:
+  inputs: [!Slot [Biofuel, 3], !Slot [EngineBlock, 2], ~]
+  outputs: [!Slot [CombustionEngine, 1], ~, ~]
+  day_to_gen: 60
+!Id InteriorBody:
+  inputs: [!Slot [CarSeat, 2], !Slot [InteriorLining, 1], ~]
+  outputs: [!Slot [InteriorBody, 1], ~, ~]
+  day_to_gen: 60
+!Id ExteriorBody:
+  inputs: [!Slot [SteelFrame, 1], !Slot [Headlights, 2], ~]
+  outputs: [!Slot [ExteriorBody, 1], ~, ~]
+  day_to_gen: 60
+!Id BodyChassis:
+  inputs: [!Slot [ExteriorBody, 1], !Slot [InteriorBody, 1], ~]
+  outputs: [!Slot [BodyChassis, 1], ~, ~]
+  day_to_gen: 120
+!Id RollingChassis:
+  inputs: [!Slot [Axles, 1], !Slot [CombustionEngine, 1], ~]
+  outputs: [!Slot [RollingChassis, 1], ~, ~]
+  day_to_gen: 120
+!Id Axles:
+  inputs: [!Slot [Steel, 3], !Slot [Tire, 2], ~]
+  outputs: [!Slot [Axles, 1], ~, ~]
+  day_to_gen: 60
 # TOY FACTORY
 # TEXTILE FACTORY
-# CARPENTRY CENTER
-# AUTOMOTIVE FACTORY
 # HOMEGOODS FACTORY
 # PETROCHEMICAL PLANT
 # COMPUTER MEGA FACTORY

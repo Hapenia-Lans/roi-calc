@@ -109,6 +109,12 @@ pub mod info {
         let Info::Farm(x) = get(Type::Farm(farm_type)) else {unreachable!()};
         x
     }
+
+    #[test]
+    fn info_test() {
+        let info = get(Type::Collector(types::Collector::Lumberyard));
+        println!("{:?}", info);
+    }
 }
 
 use info::Info;
@@ -118,14 +124,14 @@ pub mod types {
     use enum_iterator_derive::Sequence;
     use serde_derive::Deserialize;
 
-    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize)]
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, PartialOrd, Ord)]
     pub enum Type {
         Collector(Collector),
         Farm(Farm),
         Factory(Factory),
     }
 
-    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence)]
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence, PartialOrd, Ord)]
     pub enum Collector {
         Lumberyard,       // 伐木场
         IronMine,         // 铁矿
@@ -140,7 +146,7 @@ pub mod types {
         OffShoreOilDrill, // 海上石油钻井平台
     }
 
-    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence)]
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence, PartialOrd, Ord)]
     pub enum Farm {
         CropFarm,      // 农场
         LiveStockFarm, // 牧场
@@ -148,7 +154,7 @@ pub mod types {
         Plantation,    // 种植园}
     }
 
-    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence)]
+    #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Deserialize, Sequence, PartialOrd, Ord)]
     pub enum Factory {
         DrinksFactory,        // 饮料厂
         PreservationFactory,  // 预制食品厂

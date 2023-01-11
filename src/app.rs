@@ -24,6 +24,8 @@ use crate::backend::{
 use egui_extras::{Column, TableBuilder};
 use itertools::Itertools;
 
+const CROSS: &str = "🗙";
+
 #[derive(Default)]
 pub struct App {
     simulation_conditions: Vec<backend::Condition>,
@@ -79,43 +81,44 @@ impl App {
 }
 
 trait View {
-    type App;
+    type App: eframe::App;
     fn show(&mut self, app: &mut App, ctx: &egui::Context) {
-        if let Some(id) = Self::top_panel_id() {
-            egui::TopBottomPanel::top(id).show(ctx, |ui| {
-                self.show_top_panel(app, ui);
+        Self::surrounding_panels_id()
+            .into_iter()
+            .enumerate()
+            .for_each(|(i, idx)| {
+                let Some(id) = idx else { return };
+                match i {
+                    0 => {
+                        egui::TopBottomPanel::bottom(id.clone()).show(ctx, |ui| {
+                            self.show_bottom_panel(app, ui);
+                        });
+                    }
+                    1 => {
+                        egui::SidePanel::left(id.clone()).show(ctx, |ui| {
+                            self.show_left_panel(app, ui);
+                        });
+                    }
+                    2 => {
+                        egui::SidePanel::right(id.clone()).show(ctx, |ui| {
+                            self.show_right_panel(app, ui);
+                        });
+                    }
+                    3 => {
+                        egui::TopBottomPanel::top(id.clone()).show(ctx, |ui| {
+                            self.show_top_panel(app, ui);
+                        });
+                    }
+                    _ => unreachable!(),
+                }
             });
-        }
-        if let Some(id) = Self::left_panel_id() {
-            egui::SidePanel::left(id).show(ctx, |ui| {
-                self.show_left_panel(app, ui);
-            });
-        }
-        if let Some(id) = Self::right_panel_id() {
-            egui::SidePanel::right(id).show(ctx, |ui| {
-                self.show_right_panel(app, ui);
-            });
-        }
-        if let Some(id) = Self::bottom_panel_id() {
-            egui::TopBottomPanel::bottom(id).show(ctx, |ui| {
-                self.show_bottom_panel(app, ui);
-            });
-        }
         egui::CentralPanel::default().show(ctx, |ui| {
             self.show_central_panel(app, ui);
         });
     }
-    fn top_panel_id() -> Option<&'static str> {
-        None
-    }
-    fn bottom_panel_id() -> Option<&'static str> {
-        None
-    }
-    fn left_panel_id() -> Option<&'static str> {
-        None
-    }
-    fn right_panel_id() -> Option<&'static str> {
-        None
+    /// ["Bottom", "Left", "Right", Top]
+    fn surrounding_panels_id() -> [Option<String>; 4] {
+        [None, None, None, None]
     }
     fn show_central_panel(&mut self, _app: &mut App, _ui: &mut egui::Ui);
     fn show_top_panel(&mut self, _app: &mut App, _ui: &mut egui::Ui) {}
@@ -140,7 +143,6 @@ impl ProductivityView {
         i: usize,
         cond: &mut backend::Condition,
     ) {
-        self.mark_as_delete = None;
         body.row(25.0, |row| match cond {
             backend::Condition::Collector {
                 building_type,
@@ -221,7 +223,7 @@ impl ProductivityView {
             ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
         });
         row.col(|ui| {
-            if ui.button("🗙").clicked() {
+            if ui.button(CROSS).clicked() {
                 self.mark_as_delete = Some(i);
             }
         });
@@ -261,7 +263,7 @@ impl ProductivityView {
             ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
         });
         row.col(|ui| {
-            if ui.button("🗙").clicked() {
+            if ui.button(CROSS).clicked() {
                 self.mark_as_delete = Some(i);
             }
         });
@@ -300,7 +302,7 @@ impl ProductivityView {
             ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
         });
         row.col(|ui| {
-            if ui.button("🗙").clicked() {
+            if ui.button(CROSS).clicked() {
                 self.mark_as_delete = Some(i);
             }
         });
@@ -381,20 +383,13 @@ impl ProductivityView {
 impl View for ProductivityView {
     type App = crate::app::App;
 
-    fn top_panel_id() -> Option<&'static str> {
-        None
-    }
-
-    fn bottom_panel_id() -> Option<&'static str> {
-        Some("Condition table")
-    }
-
-    fn left_panel_id() -> Option<&'static str> {
-        Some("Simulation Result")
-    }
-
-    fn right_panel_id() -> Option<&'static str> {
-        None
+    fn surrounding_panels_id() -> [Option<String>; 4] {
+        [
+            Some(String::from("Condition table")),
+            Some(String::from("Simulation Result")),
+            None,
+            None,
+        ]
     }
 
     fn show_bottom_panel(&mut self, app: &mut App, ui: &mut egui::Ui) {
@@ -404,7 +399,7 @@ impl View for ProductivityView {
             for chunk in &types.into_iter().chunks(CHUNK_SIZE) {
                 ui.vertical(|ui| {
                     for building_type in chunk {
-                        if ui.button(format!("{:?}", building_type)).clicked() {
+                        if ui.small_button(format!("{:?}", building_type)).clicked() {
                             app.add_collector(building_type);
                         }
                     }
@@ -414,7 +409,7 @@ impl View for ProductivityView {
             for chunk in &types.into_iter().chunks(CHUNK_SIZE) {
                 ui.vertical(|ui| {
                     for building_type in chunk {
-                        if ui.button(format!("{:?}", building_type)).clicked() {
+                        if ui.small_button(format!("{:?}", building_type)).clicked() {
                             app.add_farm(building_type);
                         }
                     }
@@ -424,7 +419,7 @@ impl View for ProductivityView {
             for chunk in &types.into_iter().chunks(CHUNK_SIZE) {
                 ui.vertical(|ui| {
                     for building_type in chunk {
-                        if ui.button(format!("{:?}", building_type)).clicked() {
+                        if ui.small_button(format!("{:?}", building_type)).clicked() {
                             app.add_factory(building_type);
                         }
                     }
@@ -434,43 +429,42 @@ impl View for ProductivityView {
     }
 
     fn show_left_panel(&mut self, app: &mut App, ui: &mut egui::Ui) {
-        ui.vertical(|ui| {
-            if let Some(report) = &app.simulation_report {
-                ui.heading("Simulation Report");
-                ui.separator();
-                // 生产力汇报
-                let mut prodpair = report
-                    .productivity()
-                    .iter()
-                    .collect::<Vec<(&recipe::Item, &productivity::Speed)>>();
-                prodpair.sort_by(|a, b| b.1.partial_cmp(a.1).unwrap());
-                prodpair.iter().for_each(|(&k, &v)| {
-                    ui.label(format!("{:?}: {:.2} per month", k, v.monthly()));
-                });
+        egui::ScrollArea::vertical().show(ui, |ui| {
+            let Some(report) = &app.simulation_report else { return };
+            ui.heading("Simulation Report");
+            ui.separator();
+            // 生产力汇报
+            let mut prodpair = report
+                .productivity()
+                .iter()
+                .collect::<Vec<(&recipe::Item, &productivity::Speed)>>();
+            prodpair.sort_by(|a, b| b.1.partial_cmp(a.1).unwrap());
+            prodpair.iter().for_each(|(&k, &v)| {
+                ui.label(format!("{:?}: {:.2} per month", k, v.monthly()));
+            });
 
-                ui.separator();
-                ui.strong("total buildings:");
-                ui.separator();
-                let mut prodpair = report
-                    .total_buildings()
-                    .iter()
-                    .collect::<Vec<(&Type, &u32)>>();
-                prodpair.sort_by(|a, b| b.1.cmp(a.1));
-                prodpair.iter().for_each(|(&k, &v)| {
-                    ui.label(format!("  {:?}: {}", k, v));
-                });
-                ui.heading("Economics");
-                ui.separator();
-                ui.strong(format!("total price: {}", report.total_price()));
-                ui.label(format!("monthly upkeep: {}", report.monthly_upkeep()));
-                ui.label(format!(
-                    "monthly material cost: {}",
-                    report.monthly_material_cost()
-                ));
-                ui.label(format!("monthly sales: {}", report.monthly_sales()));
-                ui.strong(format!("monthly profit: {}", report.monthly_profit()));
-                ui.strong(format!("profit rate: {:.2}%", report.profit_rate() * 100.0));
-            }
+            ui.separator();
+            ui.strong("total buildings:");
+            ui.separator();
+            let mut prodpair = report
+                .total_buildings()
+                .iter()
+                .collect::<Vec<(&Type, &u32)>>();
+            prodpair.sort_by(|a, b| b.1.cmp(a.1));
+            prodpair.iter().for_each(|(&k, &v)| {
+                ui.label(format!("  {:?}: {}", k, v));
+            });
+            ui.heading("Economics");
+            ui.separator();
+            ui.strong(format!("total price: {}", report.total_price()));
+            ui.label(format!("monthly upkeep: {}", report.monthly_upkeep()));
+            ui.label(format!(
+                "monthly material cost: {}",
+                report.monthly_material_cost()
+            ));
+            ui.label(format!("monthly sales: {}", report.monthly_sales()));
+            ui.strong(format!("monthly profit: {}", report.monthly_profit()));
+            ui.strong(format!("profit rate: {:.2}%", report.profit_rate() * 100.0));
         });
     }
 
@@ -488,9 +482,9 @@ impl View for ProductivityView {
             TableBuilder::new(ui)
                 .auto_shrink([false, false])
                 .columns(Column::auto().at_least(80.0), 2)
-                .columns(Column::auto().at_least(100.0), 4)
+                .columns(Column::auto().at_least(100.0), 3)
                 .striped(true)
-                .column(Column::auto())
+                .columns(Column::auto(), 2)
                 .cell_layout(egui::Layout::left_to_right(egui::Align::Center))
                 .header(50.0, |mut header| {
                     for i in HEADERS {
@@ -500,11 +494,11 @@ impl View for ProductivityView {
                     }
                 })
                 .body(|mut body| {
+                    self.mark_as_delete = None;
                     for (i, cond) in app.simulation_conditions.iter_mut().enumerate() {
                         self.show_body_content(&mut body, i, cond);
                     }
                     if let Some(idx) = self.mark_as_delete {
-                        println!("eeee");
                         app.simulation_conditions.remove(idx);
                     }
                 });

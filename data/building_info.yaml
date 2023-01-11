@@ -184,12 +184,50 @@
     - !Id Yeast
   price: 650000
   upkeep: 15000
-# PaperMill:            # 造纸厂
+!Factory PaperMill: !Factory            # 造纸厂
+  recipes:
+    - !Id Books
+    - !Id Ink
+    - !Id PrintedPaper
+    - !Id PunchCards
+    - !Id Newspapers
+    - !Id DinnerContainer
+    - !Id HeavyPulp
+    - !Id DeluxeBooks
+    - !Id Parchment
+    - !Id Cardboard
+    - !Id ThinCardboard
+  price: 650000
+  upkeep: 16250
 # ToyFactory:           # 玩具厂
 # TextileFactory:       # 纺织厂
-# CarpentryCenter:      # 木工房
+!Factory CarpentryCenter: !Factory      # 木工房
+  recipes:
+    - !Id WoodenPlanks
+    - !Id FurnitureBase(S)
+    - !Id FurnitureBase(L)
+    - !Id Wallboards
+    - !Id WoodenBarrels
+    - !Id CarSeat
+    - !Id Sofa
+    - !Id LeatherFurniture
+    - !Id PlasticFurniture
+    - !Id ReinforcedWall
+    - !Id OfficeFurniture   
+  price: 650000
+  upkeep: 16250
 # # Heavy Industry:
-# AutomotiveFactory:    # 汽车厂
+!Factory AutomotiveFactory: !Factory    # 汽车厂
+  recipes: 
+    - !Id CombustionEngine  
+    - !Id InteriorBody
+    - !Id ExteriorBody
+    - !Id BodyChassis
+    - !Id RollingChassis
+    - !Id Axles
+  price: 2500000
+  upkeep: 62500
+  
 # HomeGoodsFactory:     # 家具厂
 !Factory GlassworksAndSmelter: !Factory # 玻璃厂
   recipes:

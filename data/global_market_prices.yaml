@@ -103,3 +103,37 @@ Wine: 23800
 Yeast: 19830
 Biofuel: 37130
 Brandy: 73280
+
+# PaperMill
+Books: 65420
+Ink: 26540
+PrintedPaper: 49830
+PunchCards: 98060
+Newspapers: 80280
+DinnerContainer: 463510
+HeavyPulp: 18860
+DeluxeBooks: 68040
+Parchment: 19050
+Cardboard: 45880
+ThinCardboard: 89890
+
+# Carpentry Center
+WoodenPlanks: 17880
+SmallFurnitureBase: 33080
+LargeFurnitureBase: 32750
+Wallboards: 65500
+WoodenBarrels: 32750
+CarSeat: 53880
+Sofa: 77240
+LeatherFurniture: 56170
+PlasticFurniture: 79980
+ReinforcedWall: 78320
+OfficeFurniture: 77360
+
+# Automotive Factory
+CombustionEngine: 434340
+InteriorBody: 367930
+ExteriorBody: 373340
+BodyChassis: 1190000
+RollingChassis: 1230000
+Axles: 346130

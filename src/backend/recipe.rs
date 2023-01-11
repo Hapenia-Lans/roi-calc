@@ -110,6 +110,9 @@ pub enum Item {
     Concrete,           // 混凝土
     LargeFurnitureBase, // 家具底座（大）
     SmallFurnitureBase, // 家具底座（小）
+    Wallboards,         // 墙板
+    ReinforcedWall,     // 加固的墙
+    Sofa,               // 沙发
     WoodenBarrels,      // 木桶
     Beer,               // 啤酒
     Biofuel,            // 生物燃料
@@ -155,7 +158,7 @@ pub enum Item {
     Burgers,            // 汉堡包
     Pizza,              // 披萨
     Capacitors,         // 电容器
-    EngineBlock,        // 发动机
+    EngineBlock,        // 发动机缸体
     Headlights,         // 头灯
     Oven,               // 烤箱
     RadioReceiver,      // 收音机
@@ -174,7 +177,7 @@ pub enum Item {
     BodyChassis,        // 汽车底盘
     Axles,              // 汽车轴承
     CombustionEngine,   // 内燃机
-    RollingChassis,     // 驱动轮
+    RollingChassis,     // 移动底盘
     Interface,          // 接口
     BinarySwitcher,     // 二进制开关
     Processor,          // 处理器
@@ -244,4 +247,16 @@ impl Recipe {
         );
         outputs_productivity + inputs_productivity
     }
+}
+
+#[test]
+fn recipes_test() {
+    let recipe = get(&Id("Wood".to_string()));
+    println!("{:?}", recipe);
+}
+
+#[test]
+fn price_test() {
+    let price = get(&Id("Wood".to_string()));
+    println!("{:?}", price);
 }
