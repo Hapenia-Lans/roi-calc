@@ -14,6 +14,10 @@ fn main() {
     eframe::run_native(
         APP_NAME,
         options,
-        Box::new(|cc| Box::new(app::App::new(cc))),
+        Box::new(|cc| {
+            let mut app = app::App::new(cc);
+            app.simulate();
+            Box::new(app)
+        }),
     );
 }

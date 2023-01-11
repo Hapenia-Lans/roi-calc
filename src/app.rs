@@ -30,7 +30,6 @@ const CROSS: &str = "🗙";
 pub struct App {
     simulation_conditions: Vec<backend::Condition>,
     simulation_report: Option<backend::Report>,
-    counter: u128,
 }
 
 impl App {
@@ -43,7 +42,7 @@ impl App {
         if let Ok(sim) = simulator {
             self.simulation_report = Some(sim.simulate());
         } else {
-            todo!();
+            unreachable!();
         }
     }
 
@@ -129,12 +128,14 @@ trait View {
 
 pub struct ProductivityView {
     mark_as_delete: Option<usize>,
+    condition_changed: bool,
 }
 
 impl ProductivityView {
     fn new() -> ProductivityView {
         ProductivityView {
             mark_as_delete: None,
+            condition_changed: false,
         }
     }
     fn show_body_content(
@@ -206,26 +207,19 @@ impl ProductivityView {
             ui.label(format!("{:?}", building_type));
         });
         row.col(|ui| {
-            Self::show_recipe_combobox(
-                ui,
-                info::get(Type::Collector(*building_type)),
-                recipe_id,
-                i,
-            );
+            self.show_recipe_combobox(ui, info::get(Type::Collector(*building_type)), recipe_id, i);
         });
         row.col(|ui| {
-            Self::show_worker_wage_combobox(ui, worker_wage, i);
+            self.show_worker_wage_combobox(ui, worker_wage, i);
         });
         row.col(|ui| {
-            Self::show_outbuilding_amount_combobox(ui, collector_amount, i);
+            self.show_outbuilding_amount_combobox(ui, collector_amount, i);
         });
         row.col(|ui| {
-            ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
+            self.show_amount(ui, amount);
         });
         row.col(|ui| {
-            if ui.button(CROSS).clicked() {
-                self.mark_as_delete = Some(i);
-            }
+            self.show_close_button(ui, i);
         });
     }
 
@@ -246,7 +240,7 @@ impl ProductivityView {
             ui.label(format!("{:?}", building_type));
         });
         row.col(|ui| {
-            Self::show_recipe_combobox(
+            self.show_recipe_combobox(
                 ui,
                 building::info::get(Type::Farm(*building_type)),
                 recipe_id,
@@ -254,18 +248,16 @@ impl ProductivityView {
             );
         });
         row.col(|ui| {
-            Self::show_worker_wage_combobox(ui, worker_wage, i);
+            self.show_worker_wage_combobox(ui, worker_wage, i);
         });
         row.col(|ui| {
-            Self::show_outbuilding_amount_combobox(ui, field_amount, i);
+            self.show_outbuilding_amount_combobox(ui, field_amount, i);
         });
         row.col(|ui| {
-            ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
+            self.show_amount(ui, amount);
         });
         row.col(|ui| {
-            if ui.button(CROSS).clicked() {
-                self.mark_as_delete = Some(i);
-            }
+            self.show_close_button(ui, i);
         });
     }
 
@@ -285,7 +277,7 @@ impl ProductivityView {
             ui.label(format!("{:?}", building_type));
         });
         row.col(|ui| {
-            Self::show_recipe_combobox(
+            self.show_recipe_combobox(
                 ui,
                 building::info::get(Type::Factory(*building_type)),
                 recipe_id,
@@ -293,22 +285,35 @@ impl ProductivityView {
             );
         });
         row.col(|ui| {
-            Self::show_worker_wage_combobox(ui, worker_wage, i);
+            self.show_worker_wage_combobox(ui, worker_wage, i);
         });
         row.col(|ui| {
             ui.label("N/A");
         });
         row.col(|ui| {
-            ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
+            self.show_amount(ui, amount);
         });
         row.col(|ui| {
-            if ui.button(CROSS).clicked() {
-                self.mark_as_delete = Some(i);
-            }
+            self.show_close_button(ui, i);
         });
     }
 
+    fn show_amount(&mut self, ui: &mut egui::Ui, amount: &mut u8) {
+        let response = ui.add(egui::DragValue::new(amount).clamp_range(1..=255));
+        if response.dragged() {
+            self.condition_changed = true;
+        }
+    }
+
+    fn show_close_button(&mut self, ui: &mut egui::Ui, i: usize) {
+        if ui.button(CROSS).clicked() {
+            self.mark_as_delete = Some(i);
+            self.condition_changed = true
+        }
+    }
+
     fn show_worker_wage_combobox(
+        &mut self,
         ui: &mut egui::Ui,
         worker_wage: &mut building::WorkerWage,
         idx: usize,
@@ -317,12 +322,16 @@ impl ProductivityView {
             .selected_text(format!("{}", worker_wage))
             .show_ui(ui, |ui| {
                 for wage in enum_iterator::all::<building::WorkerWage>() {
-                    ui.selectable_value(worker_wage, wage, format!("{}", wage));
+                    let response = ui.selectable_value(worker_wage, wage, format!("{}", wage));
+                    if response.clicked() {
+                        self.condition_changed = true;
+                    }
                 }
             });
     }
 
     fn show_recipe_combobox(
+        &mut self,
         ui: &mut egui::Ui,
         info: &Info,
         recipe_id: &mut recipe::Id,
@@ -338,6 +347,7 @@ impl ProductivityView {
                             .clicked();
                         if response {
                             *recipe_id = id.clone();
+                            self.condition_changed = true;
                         }
                     }
                 }
@@ -348,6 +358,7 @@ impl ProductivityView {
                             .clicked();
                         if response {
                             *recipe_id = id.clone();
+                            self.condition_changed = true;
                         }
                     }
                 }
@@ -358,6 +369,7 @@ impl ProductivityView {
                             .clicked();
                         if response {
                             *recipe_id = id.clone();
+                            self.condition_changed = true;
                         }
                     }
                 }
@@ -365,6 +377,7 @@ impl ProductivityView {
     }
 
     fn show_outbuilding_amount_combobox(
+        &mut self,
         ui: &mut egui::Ui,
         outbuilding_amount: &mut building::OutbuildingAmount,
         idx: usize,
@@ -374,7 +387,14 @@ impl ProductivityView {
             .selected_text(&text)
             .show_ui(ui, |ui| {
                 for amount in enum_iterator::all::<building::OutbuildingAmount>() {
-                    ui.selectable_value(outbuilding_amount, amount, format!("{}", amount as u8));
+                    let response = ui.selectable_value(
+                        outbuilding_amount,
+                        amount,
+                        format!("{}", amount as u8),
+                    );
+                    if response.clicked() {
+                        self.condition_changed = true;
+                    }
                 }
             });
     }
@@ -401,6 +421,7 @@ impl View for ProductivityView {
                     for building_type in chunk {
                         if ui.small_button(format!("{:?}", building_type)).clicked() {
                             app.add_collector(building_type);
+                            self.condition_changed = true;
                         }
                     }
                 });
@@ -411,6 +432,7 @@ impl View for ProductivityView {
                     for building_type in chunk {
                         if ui.small_button(format!("{:?}", building_type)).clicked() {
                             app.add_farm(building_type);
+                            self.condition_changed = true;
                         }
                     }
                 });
@@ -421,6 +443,7 @@ impl View for ProductivityView {
                     for building_type in chunk {
                         if ui.small_button(format!("{:?}", building_type)).clicked() {
                             app.add_factory(building_type);
+                            self.condition_changed = true;
                         }
                     }
                 });
@@ -511,12 +534,10 @@ impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _: &mut eframe::Frame) {
         let mut view = ProductivityView::new();
         view.show(self, ctx);
-        if self.counter % 3 == 0 {
+        if view.condition_changed {
             self.simulate();
-            self.counter = 0;
-            // println!("{:#?}", self.simulation_report);
+            view.condition_changed = false;
         }
-        self.counter += 1;
     }
 }
 
