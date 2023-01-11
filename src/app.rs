@@ -438,7 +438,7 @@ impl View for ProductivityView {
                 .productivity()
                 .iter()
                 .collect::<Vec<(&recipe::Item, &productivity::Speed)>>();
-            prodpair.sort_by(|a, b| b.1.partial_cmp(a.1).unwrap());
+            prodpair.sort_by(|a, b| b.0.cmp(a.0));
             prodpair.iter().for_each(|(&k, &v)| {
                 ui.label(format!("{:?}: {:.2} per month", k, v.monthly()));
             });
@@ -450,7 +450,7 @@ impl View for ProductivityView {
                 .total_buildings()
                 .iter()
                 .collect::<Vec<(&Type, &u32)>>();
-            prodpair.sort_by(|a, b| b.1.cmp(a.1));
+            prodpair.sort_by(|a, b| b.0.cmp(a.0));
             prodpair.iter().for_each(|(&k, &v)| {
                 ui.label(format!("  {:?}: {}", k, v));
             });

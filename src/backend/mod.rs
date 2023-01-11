@@ -204,3 +204,27 @@ impl Simulator {
         }
     }
 }
+
+#[test]
+fn data_intergration_test() {
+    self::building::info::INFOS.iter().for_each(|i| match i {
+        (types::Type::Collector(_), building::info::Info::Collector(x)) => x
+            .recipes
+            .iter()
+            .for_each(|id| println!("{:?}", self::recipe::get(id))),
+        (types::Type::Collector(_), building::info::Info::Farm(_)) => unreachable!(),
+        (types::Type::Collector(_), building::info::Info::Factory(_)) => unreachable!(),
+        (types::Type::Farm(_), building::info::Info::Collector(_)) => unreachable!(),
+        (types::Type::Farm(_), building::info::Info::Farm(x)) => x
+            .recipes
+            .iter()
+            .for_each(|id| println!("{:?}", self::recipe::get(id))),
+        (types::Type::Farm(_), building::info::Info::Factory(_)) => unreachable!(),
+        (types::Type::Factory(_), building::info::Info::Collector(_)) => unreachable!(),
+        (types::Type::Factory(_), building::info::Info::Farm(_)) => unreachable!(),
+        (types::Type::Factory(_), building::info::Info::Factory(x)) => x
+            .recipes
+            .iter()
+            .for_each(|id| println!("{:?}", self::recipe::get(id))),
+    });
+}

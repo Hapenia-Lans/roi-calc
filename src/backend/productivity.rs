@@ -24,14 +24,8 @@ use super::{money, recipe::Item};
 pub struct Speed(f64);
 
 impl Speed {
-    pub fn daily(&self) -> f64 {
-        self.0
-    }
     pub fn monthly(&self) -> f64 {
         self.0 * 30.0
-    }
-    pub fn yearly(&self) -> f64 {
-        self.0 * 360.0
     }
 }
 

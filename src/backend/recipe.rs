@@ -265,12 +265,13 @@ impl Recipe {
 
 #[test]
 fn recipes_test() {
-    let recipe = get(&Id("Wood".to_string()));
-    println!("{:?}", recipe);
+    println!("{:?}", RECIPES);
 }
 
 #[test]
 fn price_test() {
-    let price = get(&Id("Wood".to_string()));
-    println!("{:?}", price);
+    for i in enum_iterator::all::<Item>() {
+        let price = i.price();
+        println!("{:?}", price);
+    }
 }
