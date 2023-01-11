@@ -287,8 +287,34 @@
   price: 600000
   upkeep: 15000
 
-# PetrochemicalPlant:   # 化工厂
+!Factory PetrochemicalPlant: !Factory   # 化工厂
+  recipes:
+    - !Id Chemicals
+    - !Id Plastic
+    - !Id PlasticCutlery
+    - !Id RefinedOil
+    - !Id Buttons
+    - !Id Interface
+    - !Id Rubber
+    - !Id RubberTubes
+    - !Id Paints
+    - !Id Tire
+    - !Id Adhesive
+  price: 550000
+  upkeep: 13750
 # # Prototype Factories
-# ComputerMegaFactory:   # 计算机大型工厂
-# MealMegaFactory:       # 食品大型工厂
-# AutomobileMegaFactory: # 汽车大型工厂
+!Factory ComputerMegaFactory: !Factory   # 计算机大型工厂
+  recipes:
+    - !Id FirstComputer
+  price: 50000000
+  upkeep: 1250000
+!Factory MealMegaFactory: !Factory       # 食品大型工厂
+  recipes: 
+    - !Id PremadeDinner
+  price: 50000000
+  upkeep: 1250000
+!Factory AutomobileMegaFactory: !Factory # 汽车大型工厂
+  recipes:
+    - !Id Car
+  price: 50000000
+  upkeep: 1250000

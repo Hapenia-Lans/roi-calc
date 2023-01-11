@@ -146,7 +146,7 @@ pub enum Item {
     Stovetop,           // 炉台
     Cardboard,          // 硬纸板
     PrintedPaper,       // 打印纸
-    Adhesive,           // 胶水
+    Adhesive,           // 粘合剂
     Paints,             // 油漆
     RubberTubes,        // 橡胶管
     Tire,               // 轮胎

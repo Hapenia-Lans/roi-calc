@@ -571,6 +571,62 @@
   outputs: [!Slot [Telephones, 2], ~, ~]
   day_to_gen: 40
 # PETROCHEMICAL PLANT
+!Id Chemicals:
+  inputs: [!Slot [Gas, 3], ~, ~]
+  outputs: [!Slot [Chemicals, 2], ~, ~]
+  day_to_gen: 20
+!Id Plastic:
+  inputs: [!Slot [Oil, 2], !Slot [Gas, 1], ~]
+  outputs: [!Slot [Plastic, 2], ~, ~]
+  day_to_gen: 20
+!Id PlasticCutlery:
+  inputs: [!Slot [Plastic, 3], ~, ~]
+  outputs: [!Slot [PlasticCutlery, 2], ~, ~]
+  day_to_gen: 35
+!Id RefinedOil:
+  inputs: [!Slot [Oil, 3], ~, ~]
+  outputs: [!Slot [RefinedOil, 2], ~, ~]
+  day_to_gen: 20
+!Id Buttons:
+  inputs: [!Slot [Plastic, 2], !Slot [CopperWire, 1], ~]
+  outputs: [!Slot [Buttons, 2], ~, ~]
+  day_to_gen: 30
+!Id Interface:
+  inputs: [!Slot [Buttons, 1], !Slot [PunchCards, 1], !Slot [OfficeFurniture, 1]]
+  outputs: [!Slot [Interface, 1], ~, ~]
+  day_to_gen: 180
+!Id Rubber:
+  inputs: [!Slot [RawRubber, 1], ~, ~]
+  outputs: [!Slot [Rubber, 2], ~, ~]
+  day_to_gen: 20
+!Id RubberTubes:
+  inputs: [!Slot [Rubber, 3], ~, ~]
+  outputs: [!Slot [RubberTubes, 2], ~, ~]
+  day_to_gen: 35
+!Id Paints:
+  inputs: [!Slot [Chemicals, 1], !Slot [Dye, 2], ~]
+  outputs: [!Slot [Paints, 2], ~, ~]
+  day_to_gen: 35
+!Id Tire:
+  inputs: [!Slot [Rubber, 3], ~, ~]
+  outputs: [!Slot [Tire, 2], ~, ~]
+  day_to_gen: 35
+!Id Adhesive:
+  inputs: [!Slot [Chemicals, 1], !Slot [Plastic, 2], ~]
+  outputs: [!Slot [Adhesive, 2], ~, ~]
+  day_to_gen: 35
 # COMPUTER MEGA FACTORY
+!Id FirstComputer:
+  inputs: [!Slot [Interface, 1], !Slot [Processor, 1], !Slot [ComputerMemory, 1]]
+  outputs: [!Slot [FirstComputer, 1], ~, ~]
+  day_to_gen: 360
 # MEAL MEGA FACTORY
+!Id PremadeDinner:
+  inputs: [!Slot [ChickenDinner, 2], !Slot [DinnerContainer, 1], !Slot [BerryPie, 2]]
+  outputs: [!Slot [PremadeDinner, 1], ~, ~]
+  day_to_gen: 360
 # AUTOMOBILE MEGA FACTORY
+!Id Car:
+  inputs: [!Slot [BodyChassis, 1], !Slot [RollingChassis, 1], ~]
+  outputs: [!Slot [Car, 1], ~, ~]
+  day_to_gen: 360

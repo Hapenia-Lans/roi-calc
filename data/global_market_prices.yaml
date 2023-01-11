@@ -175,3 +175,25 @@ Oven: 69280
 Capacitors: 72250
 LightBulb: 36910
 Telephones: 75730
+
+# PETROCHEMICAL PLANT
+Chemicals:  27350
+Plastic: 27080
+PlasticCutlery: 57130
+RefinedOil: 27350
+Buttons: 50000
+Interface: 323480
+Rubber: 19230
+RubberTubes: 45880
+Paints: 50880
+Tire: 45880
+Adhesive: 57130
+
+# COMPUTER MEGA FACTORY
+FirstComputer: 24100000
+
+# MEAL MEGA FACTORY
+PremadeDinner: 23690000
+
+# AUTOMOBILE MEGA FACTORY
+Car: 24760000
