@@ -240,12 +240,7 @@ impl ProductivityView {
             ui.label(format!("{:?}", building_type));
         });
         row.col(|ui| {
-            self.show_recipe_combobox(
-                ui,
-                building::info::get(Type::Farm(*building_type)),
-                recipe_id,
-                i,
-            );
+            self.show_recipe_combobox(ui, info::get(Type::Farm(*building_type)), recipe_id, i);
         });
         row.col(|ui| {
             self.show_worker_wage_combobox(ui, worker_wage, i);
@@ -277,12 +272,7 @@ impl ProductivityView {
             ui.label(format!("{:?}", building_type));
         });
         row.col(|ui| {
-            self.show_recipe_combobox(
-                ui,
-                building::info::get(Type::Factory(*building_type)),
-                recipe_id,
-                i,
-            );
+            self.show_recipe_combobox(ui, info::get(Type::Factory(*building_type)), recipe_id, i);
         });
         row.col(|ui| {
             self.show_worker_wage_combobox(ui, worker_wage, i);
@@ -540,10 +530,3 @@ impl eframe::App for App {
         }
     }
 }
-
-// backend::recipe::RECIPES.iter().for_each(|(name, recipe)| {
-//     println!("name: {:?}, recipe: {:?}", name, recipe);
-// });
-// backend::building::info::INFOS.iter().for_each(|(b_type, inf)| {
-//     println!("type: {:?}, info: {:?}", b_type, inf);
-// });
