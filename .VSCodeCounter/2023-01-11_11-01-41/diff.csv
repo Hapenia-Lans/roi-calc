@@ -1,0 +1,6 @@
+"filename", "language", "YAML", "Rust", "comment", "blank", "total"
+"d:\Projects\rust-projects\rise_of_industry_caculator\data\building_info.yaml", "YAML", 63, 0, -4, 1, 60
+"d:\Projects\rust-projects\rise_of_industry_caculator\data\global_market_prices.yaml", "YAML", 48, 0, 4, 5, 57
+"d:\Projects\rust-projects\rise_of_industry_caculator\data\recipes.yaml", "YAML", 188, 0, 15, 0, 203
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\recipe.rs", "Rust", 0, 4, 0, 0, 4
+"Total", "-", 299, 4, 15, 6, 324

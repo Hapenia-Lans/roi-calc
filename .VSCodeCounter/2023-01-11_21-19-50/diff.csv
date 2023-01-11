@@ -1,0 +1,10 @@
+"filename", "language", "Rust", "TOML", "YAML", "comment", "blank", "total"
+"d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.toml", "TOML", 0, 1, 0, 0, 0, 1
+"d:\Projects\rust-projects\rise_of_industry_caculator\data\building_info.yaml", "YAML", 0, 0, 83, -6, 1, 78
+"d:\Projects\rust-projects\rise_of_industry_caculator\data\global_market_prices.yaml", "YAML", 0, 0, 60, 6, 7, 73
+"d:\Projects\rust-projects\rise_of_industry_caculator\data\recipes.yaml", "YAML", 0, 0, 240, 0, 0, 240
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\app.rs", "Rust", 44, 0, 0, -1, 5, 48
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\building.rs", "Rust", 7, 0, 0, 0, 1, 8
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\recipe.rs", "Rust", 28, 0, 0, 0, 1, 29
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\main.rs", "Rust", 2, 0, 0, 0, 0, 2
+"Total", "-", 81, 1, 383, -1, 15, 479

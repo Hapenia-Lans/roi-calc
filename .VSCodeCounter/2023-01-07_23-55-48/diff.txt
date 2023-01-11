@@ -1,0 +1,40 @@
+Date : 2023-01-07 23:55:48
+Directory : d:\Projects\rust-projects\rise_of_industry_caculator
+Total : 10 files,  495 codes, 10 comments, 36 blanks, all 541 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Rust     |          8 |        425 |         10 |         29 |        464 |
+| TOML     |          2 |         70 |          0 |          7 |         77 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                |         10 |        495 |         10 |         36 |        541 |
+| . (Files)                                                                        |          2 |         70 |          0 |          7 |         77 |
+| src                                                                              |          8 |        425 |         10 |         29 |        464 |
+| src (Files)                                                                      |          3 |        342 |          8 |         16 |        366 |
+| src\backend                                                                      |          4 |         83 |         15 |         14 |        112 |
+| src\interface                                                                    |          1 |          0 |        -13 |         -1 |        -14 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                         | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.lock                  | TOML     |         66 |          0 |          7 |         73 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.toml                  | TOML     |          4 |          0 |          0 |          4 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\app.rs                  | Rust     |        339 |         21 |         17 |        377 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\building.rs     | Rust     |         54 |         15 |         12 |         81 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\mod.rs          | Rust     |         13 |          0 |          1 |         14 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\productivity.rs | Rust     |         -3 |          0 |         -1 |         -4 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\recipe.rs       | Rust     |         19 |          0 |          2 |         21 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\interface\mod.rs        | Rust     |          0 |        -13 |         -1 |        -14 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\lib.rs                  | Rust     |         -2 |        -13 |         -2 |        -17 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\main.rs                 | Rust     |          5 |          0 |          1 |          6 |
+| Total                                                                            |          |        495 |         10 |         36 |        541 |
++----------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

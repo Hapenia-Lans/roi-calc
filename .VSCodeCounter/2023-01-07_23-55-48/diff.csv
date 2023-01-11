@@ -1,0 +1,12 @@
+"filename", "language", "Rust", "TOML", "comment", "blank", "total"
+"d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.lock", "TOML", 0, 66, 0, 7, 73
+"d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.toml", "TOML", 0, 4, 0, 0, 4
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\app.rs", "Rust", 339, 0, 21, 17, 377
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\building.rs", "Rust", 54, 0, 15, 12, 81
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\mod.rs", "Rust", 13, 0, 0, 1, 14
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\productivity.rs", "Rust", -3, 0, 0, -1, -4
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\recipe.rs", "Rust", 19, 0, 0, 2, 21
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\interface\mod.rs", "Rust", 0, 0, -13, -1, -14
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\lib.rs", "Rust", -2, 0, -13, -2, -17
+"d:\Projects\rust-projects\rise_of_industry_caculator\src\main.rs", "Rust", 5, 0, 0, 1, 6
+"Total", "-", 425, 70, 10, 36, 541

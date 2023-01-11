@@ -1,0 +1,39 @@
+Date : 2023-01-11 21:19:50
+Directory : d:\Projects\rust-projects\rise_of_industry_caculator
+Total : 8 files,  465 codes, -1 comments, 15 blanks, all 479 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| YAML     |          3 |        383 |          0 |          8 |        391 |
+| Rust     |          4 |         81 |         -1 |          7 |         87 |
+| TOML     |          1 |          1 |          0 |          0 |          1 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                   |          8 |        465 |         -1 |         15 |        479 |
+| . (Files)                                                                           |          1 |          1 |          0 |          0 |          1 |
+| data                                                                                |          3 |        383 |          0 |          8 |        391 |
+| src                                                                                 |          4 |         81 |         -1 |          7 |         87 |
+| src (Files)                                                                         |          2 |         46 |         -1 |          5 |         50 |
+| src\backend                                                                         |          2 |         35 |          0 |          2 |         37 |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                            | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.toml                     | TOML     |          1 |          0 |          0 |          1 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\data\building_info.yaml        | YAML     |         83 |         -6 |          1 |         78 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\data\global_market_prices.yaml | YAML     |         60 |          6 |          7 |         73 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\data\recipes.yaml              | YAML     |        240 |          0 |          0 |        240 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\app.rs                     | Rust     |         44 |         -1 |          5 |         48 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\building.rs        | Rust     |          7 |          0 |          1 |          8 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\recipe.rs          | Rust     |         28 |          0 |          1 |         29 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\main.rs                    | Rust     |          2 |          0 |          0 |          2 |
+| Total                                                                               |          |        465 |         -1 |         15 |        479 |
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

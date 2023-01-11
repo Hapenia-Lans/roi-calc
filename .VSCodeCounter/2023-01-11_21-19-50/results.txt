@@ -1,0 +1,42 @@
+Date : 2023-01-11 21:19:50
+Directory : d:\Projects\rust-projects\rise_of_industry_caculator
+Total : 11 files,  2415 codes, 195 comments, 201 blanks, all 2811 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Rust     |          7 |      1,457 |        112 |        171 |      1,740 |
+| YAML     |          3 |        941 |         82 |         27 |      1,050 |
+| TOML     |          1 |         17 |          1 |          3 |         21 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                   |         11 |      2,415 |        195 |        201 |      2,811 |
+| . (Files)                                                                           |          1 |         17 |          1 |          3 |         21 |
+| data                                                                                |          3 |        941 |         82 |         27 |      1,050 |
+| src                                                                                 |          7 |      1,457 |        112 |        171 |      1,740 |
+| src (Files)                                                                         |          2 |        497 |         22 |         30 |        549 |
+| src\backend                                                                         |          5 |        960 |         90 |        141 |      1,191 |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                            | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Projects\rust-projects\rise_of_industry_caculator\Cargo.toml                     | TOML     |         17 |          1 |          3 |         21 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\data\building_info.yaml        | YAML     |        268 |         22 |          5 |        295 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\data\global_market_prices.yaml | YAML     |        137 |         27 |         14 |        178 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\data\recipes.yaml              | YAML     |        536 |         33 |          8 |        577 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\app.rs                     | Rust     |        481 |         22 |         26 |        529 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\building.rs        | Rust     |        312 |         32 |         56 |        400 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\mod.rs             | Rust     |        172 |         15 |         20 |        207 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\money.rs           | Rust     |         91 |         13 |         22 |        126 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\productivity.rs    | Rust     |        137 |         17 |         27 |        181 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\backend\recipe.rs          | Rust     |        248 |         13 |         16 |        277 |
+| d:\Projects\rust-projects\rise_of_industry_caculator\src\main.rs                    | Rust     |         16 |          0 |          4 |         20 |
+| Total                                                                               |          |      2,415 |        195 |        201 |      2,811 |
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
