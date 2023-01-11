@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
@@ -34,16 +33,20 @@ impl ToString for Id {
 }
 
 pub static RECIPES: Lazy<HashMap<Id, Recipe>> = Lazy::new(|| {
-    const RECIPE_RAW: &'static str = include_str!("../../data/recipes.yaml");
-    match serde_yaml::from_str(RECIPE_RAW) {
+    lazy_static_include_str! {
+        RECIPE_RAW => "data/recipes.yaml",
+    }
+    match serde_yaml::from_str(&RECIPE_RAW) {
         Ok(x) => x,
         Err(e) => unreachable!("{}", e),
     }
 });
 
 static PRICES: Lazy<HashMap<Item, Money>> = Lazy::new(|| {
-    const PRICES_RAW: &'static str = include_str!("../../data/global_market_prices.yaml");
-    match serde_yaml::from_str(PRICES_RAW) {
+    lazy_static_include_str! {
+        PRICES_RAW => "data/global_market_prices.yaml",
+    }
+    match serde_yaml::from_str(&PRICES_RAW) {
         Ok(x) => x,
         Err(e) => unreachable!("{}", e),
     }
@@ -114,6 +117,15 @@ pub enum Item {
     ReinforcedWall,     // 加固的墙
     Sofa,               // 沙发
     WoodenBarrels,      // 木桶
+    Dolls,              // 洋娃娃
+    ToyFurniture,       // 玩具家具
+    Dollhouse,          // 娃娃屋
+    Marbles,            // 弹珠
+    EasterEggs,         // 彩蛋
+    WoodenToyTrain,     // 木制火车
+    PlushToys,          // 毛绒玩具
+    Teddybears,         // 泰迪熊
+    ToyTrainSet,        // 玩具火车套装
     Beer,               // 啤酒
     Biofuel,            // 生物燃料
     Vodka,              // 伏特加
@@ -131,7 +143,7 @@ pub enum Item {
     LightBulb,          // 灯泡
     Radiator,           // 散热器
     Refrigerator,       // 冰箱
-    Stovetop,           // 炉子
+    Stovetop,           // 炉台
     Cardboard,          // 硬纸板
     PrintedPaper,       // 打印纸
     Adhesive,           // 胶水
@@ -171,6 +183,8 @@ pub enum Item {
     InteriorLining,     // 里衬
     SummerClothes,      // 夏装
     WinterClothes,      // 冬装
+    WorkClothes,        // 工作服
+    Quilts,             // 被子
     Napkins,            // 餐巾
     ExteriorBody,       // 汽车外壳
     InteriorBody,       // 汽车内饰

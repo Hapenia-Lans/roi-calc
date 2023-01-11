@@ -34,8 +34,10 @@ pub mod info {
     use serde_derive::Deserialize;
 
     pub static INFOS: Lazy<HashMap<Type, Info>> = Lazy::new(|| {
-        const INFO_RAW: &'static str = include_str!("../../data/building_info.yaml");
-        serde_yaml::from_str(INFO_RAW).unwrap()
+        lazy_static_include_str! {
+            INFO_RAW => "data/building_info.yaml",
+        }
+        serde_yaml::from_str(&INFO_RAW).unwrap()
     });
 
     #[derive(Debug, Deserialize)]

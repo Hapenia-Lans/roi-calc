@@ -199,8 +199,32 @@
     - !Id ThinCardboard
   price: 650000
   upkeep: 16250
-# ToyFactory:           # 玩具厂
-# TextileFactory:       # 纺织厂
+!Factory ToyFactory: !Factory           # 玩具厂
+  recipes:
+    - !Id Dolls
+    - !Id ToyFurniture
+    - !Id Dollhouse
+    - !Id Marbles
+    - !Id EasterEggs
+    - !Id WoodenToyTrain
+    - !Id PlushToys
+    - !Id Teddybears
+    - !Id ToyTrainSet
+  price: 600000
+  upkeep: 15000
+!Factory TextileFactory: !Factory       # 纺织厂
+  recipes:
+    - !Id InteriorLining
+    - !Id WinterClothes
+    - !Id HeavyFabric
+    - !Id WorkClothes
+    - !Id Dye
+    - !Id Fibers
+    - !Id Quilts
+    - !Id LightFabric
+    - !Id Napkins
+  price: 450000
+  upkeep: 11250
 !Factory CarpentryCenter: !Factory      # 木工房
   recipes:
     - !Id WoodenPlanks
@@ -228,7 +252,23 @@
   price: 2500000
   upkeep: 62500
   
-# HomeGoodsFactory:     # 家具厂
+!Factory HomeGoodsFactory: !Factory     # 家具厂
+  recipes:
+    - !Id Diodes
+    - !Id BinarySwitcher
+    - !Id Refrigerator
+    - !Id Headlights
+    - !Id EngineBlock
+    - !Id Processor
+    - !Id RadioReceiver
+    - !Id Radiator
+    - !Id Stovetop
+    - !Id Oven
+    - !Id Capacitors
+    - !Id LightBulb
+    - !Id Telephones
+  price: 500000
+  upkeep: 12500
 !Factory GlassworksAndSmelter: !Factory # 玻璃厂
   recipes:
     - !Id Concrete

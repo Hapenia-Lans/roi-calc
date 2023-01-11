@@ -440,8 +440,136 @@
   outputs: [!Slot [Axles, 1], ~, ~]
   day_to_gen: 60
 # TOY FACTORY
+!Id Dolls:
+  inputs: [!Slot [PlushToys, 1], !Slot [LightFabric, 1], ~]
+  outputs: [!Slot [Dolls, 2], ~, ~]
+  day_to_gen: 35
+!Id ToyFurniture:
+  inputs: [!Slot [Wood, 1], ~, ~]
+  outputs: [!Slot [ToyFurniture, 2], ~, ~]
+  day_to_gen: 20
+!Id Dollhouse:
+  inputs: [!Slot [Dolls, 1], !Slot [SmallFurnitureBase, 1], !Slot [ToyFurniture, 2]]
+  outputs: [!Slot [Dollhouse, 2], ~, ~]
+  day_to_gen: 45
+!Id Marbles:
+  inputs: [!Slot [Glass, 2], !Slot [Dye, 1], ~]
+  outputs: [!Slot [Marbles, 2], ~, ~]
+  day_to_gen: 35
+!Id EasterEggs:
+  inputs: [!Slot [Paints, 1], !Slot [Plastic, 2], ~]
+  outputs: [!Slot [EasterEggs, 2], ~, ~]
+  day_to_gen: 40
+!Id WoodenToyTrain:
+  inputs: [!Slot [Wood, 2], ~, ~]
+  outputs: [!Slot [WoodenToyTrain, 2], ~, ~]
+  day_to_gen: 20
+!Id PlushToys:
+  inputs: [!Slot [Cotton, 1], ~, ~]
+  outputs: [!Slot [PlushToys, 2], ~, ~]
+  day_to_gen: 15
+!Id Teddybears:
+  inputs: [!Slot [PlushToys, 2], !Slot [Wool, 2], ~]
+  outputs: [!Slot [Teddybears, 2], ~, ~]
+  day_to_gen: 25
+!Id ToyTrainSet:
+  inputs: [!Slot [WoodenToyTrain, 2], !Slot [Steel, 1], ~]
+  outputs: [!Slot [ToyTrainSet, 2], ~, ~]
+  day_to_gen: 30
 # TEXTILE FACTORY
+!Id InteriorLining:
+  inputs: [!Slot [HeavyFabric, 2], !Slot [Cardboard, 1], ~]
+  outputs: [!Slot [InteriorLining, 2], ~, ~]
+  day_to_gen: 40
+!Id WinterClothes:
+  inputs: [!Slot [HeavyFabric, 2], !Slot [Wool, 2], ~]
+  outputs: [!Slot [WinterClothes, 2], ~, ~]
+  day_to_gen: 35
+!Id HeavyFabric:
+  inputs: [!Slot [Fibers, 2], !Slot [Leather, 1], ~]
+  outputs: [!Slot [HeavyFabric, 2], ~, ~]
+  day_to_gen: 25
+!Id SummerClothes:
+  inputs: [!Slot [LightFabric, 2], !Slot [Dye, 2], ~]
+  outputs: [!Slot [SummerClothes, 2], ~, ~]
+  day_to_gen: 45
+!Id WorkClothes:
+  inputs: [!Slot [HeavyFabric, 2], !Slot [Leather, 2], ~]
+  outputs: [!Slot [WorkClothes, 2], ~, ~]
+  day_to_gen: 35
+!Id Dye:
+  inputs: [!Slot [Berries, 2], !Slot [Water, 1], ~]
+  outputs: [!Slot [Dye, 2], ~, ~]
+  day_to_gen: 20
+!Id Fibers:
+  inputs: [!Slot [Cotton, 2], ~, ~]
+  outputs: [!Slot [Fibers, 2], ~, ~]
+  day_to_gen: 20
+!Id Quilts:
+  inputs: [!Slot [LightFabric, 2], ~, ~]
+  outputs: [!Slot [Cotton, 2], ~, ~]
+  day_to_gen: 40
+!Id LightFabric:
+  inputs: [!Slot [Fibers, 2], !Slot [Dye, 2], ~]
+  outputs: [!Slot [LightFabric, 2], ~, ~]
+  day_to_gen: 30
+!Id Napkins:
+  inputs: [!Slot [LightFabric, 3], ~, ~]
+  outputs: [!Slot [Napkins, 2], ~, ~]
+  day_to_gen: 45
 # HOMEGOODS FACTORY
+!Id Diodes:
+  inputs: [!Slot [CopperWire, 2], !Slot [Glass, 1], ~]
+  outputs: [!Slot [Diodes, 2], ~, ~]
+  day_to_gen: 25
+!Id BinarySwitcher:
+  inputs: [!Slot [Steel, 1], !Slot [Diodes, 1], !Slot [SmallFurnitureBase, 1]]
+  outputs: [!Slot [BinarySwitcher, 1], ~, ~]
+  day_to_gen: 120
+!Id Refrigerator:
+  inputs: [!Slot [CopperTubing, 2], !Slot [Steel, 1], !Slot [Gas, 1]]
+  outputs: [!Slot [Refrigerator, 2], ~, ~]
+  day_to_gen: 30
+!Id Headlights:
+  inputs: [!Slot [LightBulb, 2], !Slot [Glass, 2], ~]
+  outputs: [!Slot [Headlights, 2], ~, ~]
+  day_to_gen: 40
+!Id EngineBlock:
+  inputs: [!Slot [Radiator, 2], !Slot [Steel, 2], ~]
+  outputs: [!Slot [EngineBlock, 2], ~, ~]
+  day_to_gen: 40
+!Id Processor:
+  inputs: [!Slot [BinarySwitcher, 2], !Slot [SteelFrame, 1], ~]
+  outputs: [!Slot [Processor, 1], ~, ~]
+  day_to_gen: 180
+!Id RadioReceiver:
+  inputs: [!Slot [Diodes, 2], !Slot [SmallFurnitureBase, 1], ~]
+  outputs: [!Slot [RadioReceiver, 2], ~, ~]
+  day_to_gen: 40
+!Id Radiator:
+  inputs: [!Slot [Steel, 1], !Slot [CopperTubing, 2], ~]
+  outputs: [!Slot [Radiator, 2], ~, ~]
+  day_to_gen: 25
+!Id Stovetop:
+  inputs: [!Slot [Steel, 2], !Slot [CopperTubing, 1], ~]
+  outputs: [!Slot [Stovetop, 2], ~, ~]
+  day_to_gen: 25
+!Id Oven:
+  inputs: [!Slot [Stovetop, 1], !Slot [Ceramic, 2], ~]
+  outputs: [!Slot [Oven, 2], ~, ~]
+  day_to_gen: 40
+!Id Capacitors:
+  inputs: [!Slot [CopperWire, 1], !Slot [Cans, 1], !Slot [Ceramic, 1]]
+  outputs: [!Slot [Capacitors, 2], ~, ~]
+  day_to_gen: 40
+!Id LightBulb:
+  inputs: [!Slot [CopperWire, 2], !Slot [Glass, 1], ~]
+  outputs: [!Slot [LightBulb, 2], ~, ~]
+  day_to_gen: 25
+!Id Telephones:
+  inputs: [!Slot [Diodes, 2], !Slot [Plastic, 2], ~]
+  outputs: [!Slot [Telephones, 2], ~, ~]
+  day_to_gen: 40
 # PETROCHEMICAL PLANT
 # COMPUTER MEGA FACTORY
 # MEAL MEGA FACTORY

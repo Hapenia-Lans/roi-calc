@@ -35,6 +35,7 @@ Sugar: 9040
 Apples: 7880
 Grapes: 7880
 Vegetables: 7390
+Olives: 8600
 # 牲畜
 ChickenMeat: 5220
 Eggs: 2610
@@ -137,3 +138,40 @@ ExteriorBody: 373340
 BodyChassis: 1190000
 RollingChassis: 1230000
 Axles: 346130
+
+# TOY FACTORY
+Dolls: 47310
+ToyFurniture: 14260
+Dollhouse: 73510
+Marbles: 45580
+EasterEggs: 69150
+WoodenToyTrain: 15530
+PlushToys: 13950
+Teddybears: 30520
+ToyTrainSet: 43960
+
+# TEXTILE FACTORY
+InteriorLining: 65840
+WinterClothes: 46910
+HeavyFabric: 31960
+WorkClothes: 49410
+Dye: 21590
+Fibers: 19030
+Quilts: 60040
+LightFabric: 40870 
+Napkins: 75290
+
+# HOMEGOODS FACTORY
+Diodes: 36910
+BinarySwitcher: 157810
+Refrigerator: 47880
+Headlights: 65660
+EngineBlock: 76890
+Processor: 495720
+RadioReceiver: 66840
+Radiator: 40630
+Stovetop: 44000
+Oven: 69280
+Capacitors: 72250
+LightBulb: 36910
+Telephones: 75730

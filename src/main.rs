@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate lazy_static_include;
+
 mod app;
 mod backend;
 
